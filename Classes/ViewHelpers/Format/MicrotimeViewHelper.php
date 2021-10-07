@@ -53,6 +53,8 @@ class MicrotimeViewHelper extends AbstractViewHelper
     ): string {
         $microTime = (string)$arguments['microTime'];
         $format = $arguments['format'];
+        $timezoneIdentifier = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] ?? 'Universal';
+        $timezone = new \DateTimeZone($timezoneIdentifier);
 
         if (false !== strpos($microTime, '.')) {
             $dateTime = DateTime::createFromFormat('U.u', $microTime);
@@ -61,7 +63,12 @@ class MicrotimeViewHelper extends AbstractViewHelper
         } else {
             $dateTime = DateTime::createFromFormat('U', $microTime);
         }
+        $dateTime->setTimezone($timezone);
 
-        return $dateTime->format($format);
+        return sprintf(
+            '<span title="%s time">%s</span>',
+            $timezoneIdentifier,
+            $dateTime->format($format)
+        );
     }
 }

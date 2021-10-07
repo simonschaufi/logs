@@ -33,7 +33,7 @@
 			<tr>
 				<td>{log.requestId}</td>
 				<td>
-					<logs:format.microtime microTime="{log.timeMicro}" />
+					{logs:format.microtime(microTime: log.timeMicro) -> f:format.raw()}
 					<br />({log.timeMicro})
 				</td>
 				<td>{log.component}</td>
