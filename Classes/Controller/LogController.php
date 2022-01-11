@@ -14,7 +14,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
-use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
 
 class LogController extends ActionController
 {
@@ -67,7 +66,6 @@ class LogController extends ActionController
      * @param string $message
      *
      * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
      */
     public function deleteAction(string $requestId, float $timeMicro, string $component, int $level, string $message)
     {
@@ -83,7 +81,6 @@ class LogController extends ActionController
      * @param string $message
      *
      * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
      */
     public function deleteAlikeAction(string $component, int $level, string $message)
     {
