@@ -49,7 +49,7 @@ class LogController extends ActionController
     public function filterAction(Filter $filter = null)
     {
         if (null === $filter) {
-            $filter = GeneralUtility::makeInstance(Filter::class);
+            $filter = new Filter();
         }
         $reader = GeneralUtility::makeInstance(ConjunctionReader::class, $this->logConfiguration);
         $logs = $reader->findByFilter($filter);
@@ -69,7 +69,7 @@ class LogController extends ActionController
      */
     public function deleteAction(string $requestId, float $timeMicro, string $component, int $level, string $message)
     {
-        $log = GeneralUtility::makeInstance(Log::class, $requestId, $timeMicro, $component, $level, $message, []);
+        $log = new Log($requestId, $timeMicro, $component, $level, $message, []);
         $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class, $this->logConfiguration);
         $conjunctionReader->delete($log);
         $this->redirect('filter');
@@ -84,7 +84,7 @@ class LogController extends ActionController
      */
     public function deleteAlikeAction(string $component, int $level, string $message)
     {
-        $log = GeneralUtility::makeInstance(Log::class, '', 0.0, $component, $level, $message, []);
+        $log = new Log('', 0.0, $component, $level, $message, []);
         $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class, $this->logConfiguration);
         $conjunctionReader->deleteAlike($log);
         $this->redirect('filter');
