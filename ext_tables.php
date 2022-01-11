@@ -8,7 +8,7 @@
 
     if ($configuration['moduleConfig'] !== 'disable') {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-            'CoStack.Logs',
+            'logs',
             $configuration['moduleConfig'],
             'logs',
             '',
