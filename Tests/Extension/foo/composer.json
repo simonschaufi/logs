@@ -1,0 +1,26 @@
+{
+    "name": "co-stack/foo",
+    "type": "typo3-cms-extension",
+    "description": "Test extension to create log entries in the development environment",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Oliver Eglseder",
+            "email": "oliver.eglseder@co-stack.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CoStack\\Foo\\": "Classes"
+        }
+    },
+    "require": {
+        "typo3/cms-core": "^11.5",
+        "fakerphp/faker": "^v1.17.0"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "foo"
+        }
+    }
+}

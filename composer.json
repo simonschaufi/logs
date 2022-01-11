@@ -3,6 +3,12 @@
     "type": "typo3-cms-extension",
     "description": "TYPO3 Logging API reading module and devlog extension in one",
     "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Oliver Eglseder",
+            "email": "oliver.eglseder@co-stack.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "CoStack\\Logs\\": "Classes/"
@@ -36,11 +42,18 @@
         }
     },
     "require-dev": {
+        "co-stack/foo": "@dev",
         "typo3/minimal": "^v11.5"
     },
     "scripts": {
         "post-autoload-dump": [
             "ln -snf ../../../../ .Build/Web/typo3conf/ext/logs"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./Tests/Extension/*"
+        }
+    ]
 }
