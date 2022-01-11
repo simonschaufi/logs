@@ -8,26 +8,15 @@ use CoStack\Logs\Domain\Model\Log;
 
 interface EraserInterface
 {
-    /**
-     * EraserInterface constructor.
-     *
-     * @param array|null $configuration
-     */
-    public function __construct(array $configuration = null);
+    public function __construct(?array $configuration = null);
 
     /**
-     * @param Log $log
-     *
-     * @return mixed
+     * Deletes a single log entry found by the given log model.
      */
-    public function delete(Log $log);
+    public function delete(Log $log): void;
 
     /**
      * Deletes all log entries with the same component, message and level (ignoring the request ID, micro time and data)
-     *
-     * @param Log $log
-     *
-     * @return void
      */
-    public function deleteAlike(Log $log);
+    public function deleteAlike(Log $log): void;
 }

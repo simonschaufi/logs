@@ -20,11 +20,8 @@ class ReaderFactory
     /**
      * @param array|null $logConfiguration Omit if you want all readers for all configured writers or pass your writer
      *     configuration if you want only the reader for the given writers
-     * @param array $logReader
-     *
-     * @return array
      */
-    public function getReadersForWriters(array $logConfiguration = null, array $logReader = [])
+    public function getReadersForWriters(?array $logConfiguration = null, array $logReader = []): array
     {
         if (null === $logConfiguration) {
             $logConfiguration = $this->getLogConfiguration();
@@ -41,12 +38,6 @@ class ReaderFactory
         return $logReader;
     }
 
-    /**
-     * @param array $logConfiguration
-     * @param array $writer
-     *
-     * @return array
-     */
     protected function collectWriter(array $logConfiguration, array $writer = []): array
     {
         foreach ($logConfiguration as $key => $value) {
@@ -70,12 +61,6 @@ class ReaderFactory
         return $writer;
     }
 
-    /**
-     * @param string $class
-     * @param array $writerConfig
-     *
-     * @return string
-     */
     protected function getUniqueConfigKey(string $class, array $writerConfig): string
     {
         /** @var ReaderInterface $readerClass */
@@ -88,8 +73,6 @@ class ReaderFactory
     }
 
     /**
-     * @return array
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     protected function getLogConfiguration(): array

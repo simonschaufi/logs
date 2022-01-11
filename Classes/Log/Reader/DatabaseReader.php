@@ -20,27 +20,13 @@ use function substr;
 
 class DatabaseReader implements ReaderInterface
 {
-    /**
-     * @var array
-     */
-    protected $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
+    protected array $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
 
-    /**
-     * @var string
-     */
-    protected $table = '';
+    protected string $table = '';
 
-    /**
-     * @var Connection|null
-     */
-    protected $connection = null;
+    protected Connection $connection;
 
-    /**
-     * DatabaseReader constructor.
-     *
-     * @param array|null $configuration
-     */
-    public function __construct(array $configuration = null)
+    public function __construct(?array $configuration = null)
     {
         if (null !== $configuration && isset($configuration['logTable'])) {
             $this->table = $configuration['logTable'];
@@ -59,8 +45,6 @@ class DatabaseReader implements ReaderInterface
     }
 
     /**
-     * @param Filter $filter
-     *
      * @return Log[]
      */
     public function findByFilter(Filter $filter): array
@@ -122,8 +106,6 @@ class DatabaseReader implements ReaderInterface
     }
 
     /**
-     * @param Statement $statement
-     *
      * @return Log[]
      */
     protected function fetchLogsByStatement(Statement $statement): array

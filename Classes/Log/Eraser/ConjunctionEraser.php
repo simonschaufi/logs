@@ -9,36 +9,23 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ConjunctionEraser implements EraserInterface
 {
-    /**
-     * @var EraserInterface[]
-     */
-    protected $eraser = [];
+    /** @var EraserInterface[] */
+    protected array $eraser = [];
 
-    /**
-     * @param array|null $configuration
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function __construct(array $configuration = null)
+    public function __construct(?array $configuration = null)
     {
         $eraserFactory = GeneralUtility::makeInstance(EraserFactory::class);
         $this->eraser = $eraserFactory->getErasersForWriters($configuration);
     }
 
-    /**
-     * @param Log $log
-     */
-    public function delete(Log $log)
+    public function delete(Log $log): void
     {
         foreach ($this->eraser as $eraser) {
             $eraser->delete($log);
         }
     }
 
-    /**
-     * @param Log $log
-     */
-    public function deleteAlike(Log $log)
+    public function deleteAlike(Log $log): void
     {
         foreach ($this->eraser as $eraser) {
             $eraser->deleteAlike($log);

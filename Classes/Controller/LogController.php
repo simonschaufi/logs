@@ -21,7 +21,7 @@ class LogController extends ActionController
      * @var array|null
      * @api Overwrite this property in your inheriting controller with your log config to restrict log readers
      */
-    protected $logConfiguration = null;
+    protected ?array $logConfiguration = null;
 
     /**
      * @throws InvalidArgumentNameException

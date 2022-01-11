@@ -12,55 +12,25 @@ class Filter
     public const SORTING_DESC = 'DESC';
     public const SORTING_ASC = 'ASC';
 
-    /**
-     * @var string
-     */
-    protected $requestId = '';
+    protected string $requestId = '';
 
-    /**
-     * @var string
-     */
-    protected $level = LogLevel::NOTICE;
+    protected string $level = LogLevel::NOTICE;
 
-    /**
-     * @var int|null
-     */
-    protected $fromTime;
+    protected ?int $fromTime;
 
-    /**
-     * @var int|null
-     */
-    protected $toTime;
+    protected ?int $toTime;
 
-    /**
-     * @var bool
-     */
-    protected $showData = false;
+    protected bool $showData = false;
 
-    /**
-     * @var string
-     */
-    protected $component = '';
+    protected string $component = '';
 
-    /**
-     * @var bool
-     */
-    protected $fullMessage = true;
+    protected bool $fullMessage = true;
 
-    /**
-     * @var int
-     */
-    protected $limit = 150;
+    protected int $limit = 150;
 
-    /**
-     * @var string
-     */
-    protected $orderField = Log::FIELD_TIME_MICRO;
+    protected string $orderField = Log::FIELD_TIME_MICRO;
 
-    /**
-     * @var string
-     */
-    protected $orderDirection = self::SORTING_DESC;
+    protected string $orderDirection = self::SORTING_DESC;
 
     public function getRequestId(): string
     {

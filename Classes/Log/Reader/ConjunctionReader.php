@@ -16,33 +16,21 @@ use function usort;
 
 class ConjunctionReader implements ReaderInterface
 {
-    /**
-     * @var ReaderInterface[]
-     */
-    protected $readers = [];
+    /** @var ReaderInterface[] */
+    protected array $readers = [];
 
-    /**
-     * ConjunctionReader constructor.
-     *
-     * @param array|null $configuration
-     */
-    public function __construct(array $configuration = null)
+    public function __construct(?array $configuration = null)
     {
         $readerFactory = GeneralUtility::makeInstance(ReaderFactory::class);
         $this->readers = $readerFactory->getReadersForWriters($configuration);
     }
 
-    /**
-     * @return array
-     */
     public static function getDefaultConfigForUniqueKeys(): array
     {
         return [];
     }
 
     /**
-     * @param Filter $filter
-     *
      * @return Log[]
      */
     public function findByFilter(Filter $filter): array
@@ -77,7 +65,7 @@ class ConjunctionReader implements ReaderInterface
     /**
      * @param ReaderInterface[] $readers
      */
-    public function setReaders(array $readers)
+    public function setReaders(array $readers): void
     {
         $this->readers = $readers;
     }
@@ -85,17 +73,14 @@ class ConjunctionReader implements ReaderInterface
     /**
      * @param ReaderInterface[] $readers
      */
-    public function addReaders(array $readers)
+    public function addReaders(array $readers): void
     {
         foreach ($readers as $reader) {
             $this->addReader($reader);
         }
     }
 
-    /**
-     * @param ReaderInterface $reader
-     */
-    public function addReader(ReaderInterface $reader)
+    public function addReader(ReaderInterface $reader): void
     {
         $this->readers[] = $reader;
     }
