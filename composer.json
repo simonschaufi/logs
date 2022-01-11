@@ -12,7 +12,7 @@
         "php": ">=7.2",
         "ext-json": "*",
         "ext-pdo": "*",
-        "typo3/cms-core": "^9.5 || ^10.4",
+        "typo3/cms-core": "^11.5",
         "psr/log": "^1.0"
     },
     "config": {
@@ -36,7 +36,7 @@
         }
     },
     "require-dev": {
-        "typo3/minimal": "^v10.4.0"
+        "typo3/minimal": "^v11.5"
     },
     "scripts": {
         "post-autoload-dump": [
