@@ -1,10 +1,10 @@
 <?php
-(static function () {
-    $configuration = (array)@unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['logs']);
+/** @noinspection PhpFullyQualifiedNameUsageInspection */
 
-    if (empty($configuration['moduleConfig'])) {
-        $configuration['moduleConfig'] = 'tools';
-    }
+(static function () {
+    $configuration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+    )->get('logs');
 
     if ($configuration['moduleConfig'] !== 'disable') {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
@@ -14,7 +14,7 @@
             '',
             [
                 'Log' => 'filter,delete,deleteAlike',
-                'Deprecation' => 'filter,delete'
+                'Deprecation' => 'filter,delete',
             ],
             [
                 'access' => 'user,group',
