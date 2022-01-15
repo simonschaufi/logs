@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CoStack\Logs\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -23,9 +24,11 @@ use function unlink;
 
 class DeprecationController extends ActionController
 {
+    use ModuleTemplate;
+
     private const STATIC_PREFIX = ' component="TYPO3.CMS.deprecations":';
 
-    public function filterAction(): void
+    public function filterAction(): ResponseInterface
     {
         $file = $this->getLogFilePath();
         $stream = fopen($file, 'rb');
@@ -69,6 +72,8 @@ class DeprecationController extends ActionController
         }
 
         $this->view->assign('deprecations', $deprecations);
+
+        return $this->htmlResponse();
     }
 
     /**

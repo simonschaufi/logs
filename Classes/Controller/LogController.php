@@ -8,15 +8,17 @@ use CoStack\Logs\Domain\Model\Filter;
 use CoStack\Logs\Domain\Model\Log;
 use CoStack\Logs\Log\Eraser\ConjunctionEraser;
 use CoStack\Logs\Log\Reader\ConjunctionReader;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentNameException;
 use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 
 class LogController extends ActionController
 {
+    use ModuleTemplate;
+
     /**
      * @var array|null
      * @api Overwrite this property in your inheriting controller with your log config to restrict log readers
@@ -24,10 +26,9 @@ class LogController extends ActionController
     protected ?array $logConfiguration = null;
 
     /**
-     * @throws InvalidArgumentNameException
      * @throws NoSuchArgumentException
      */
-    protected function initializeFilterAction()
+    protected function initializeFilterAction(): void
     {
         if ($this->request->hasArgument('filter')) {
             $filter = $this->request->getArgument('filter');
@@ -42,11 +43,9 @@ class LogController extends ActionController
     }
 
     /**
-     * @param Filter|null $filter
-     *
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("filter")
      */
-    public function filterAction(Filter $filter = null)
+    public function filterAction(?Filter $filter = null): ResponseInterface
     {
         if (null === $filter) {
             $filter = new Filter();
@@ -56,19 +55,20 @@ class LogController extends ActionController
 
         $this->view->assign('filter', $filter);
         $this->view->assign('logs', $logs);
+
+        return $this->htmlResponse();
     }
 
     /**
-     * @param string $requestId
-     * @param float $timeMicro
-     * @param string $component
-     * @param int $level
-     * @param string $message
-     *
      * @throws StopActionException
      */
-    public function deleteAction(string $requestId, float $timeMicro, string $component, int $level, string $message)
-    {
+    public function deleteAction(
+        string $requestId,
+        float $timeMicro,
+        string $component,
+        int $level,
+        string $message
+    ): void {
         $log = new Log($requestId, $timeMicro, $component, $level, $message, []);
         $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class, $this->logConfiguration);
         $conjunctionReader->delete($log);
@@ -76,13 +76,9 @@ class LogController extends ActionController
     }
 
     /**
-     * @param string $component
-     * @param int $level
-     * @param string $message
-     *
      * @throws StopActionException
      */
-    public function deleteAlikeAction(string $component, int $level, string $message)
+    public function deleteAlikeAction(string $component, int $level, string $message): void
     {
         $log = new Log('', 0.0, $component, $level, $message, []);
         $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class, $this->logConfiguration);
