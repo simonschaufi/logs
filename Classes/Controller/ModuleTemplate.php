@@ -9,6 +9,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Localization\LanguageServiceFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
@@ -25,6 +26,8 @@ trait ModuleTemplate
 
     private LanguageService $languageService;
 
+    private PageRenderer $pageRenderer;
+
     /**
      * @var array<string, non-empty-array<string, string>>
      */
@@ -39,6 +42,10 @@ trait ModuleTemplate
         ],
     ];
 
+    private array $requireJsModules = [
+        'TYPO3/CMS/Logs/Module'
+    ];
+
     public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
     {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
@@ -47,6 +54,11 @@ trait ModuleTemplate
     public function injectLanguageService(LanguageServiceFactory $languageServiceFactory): void
     {
         $this->languageService = $languageServiceFactory->createFromUserPreferences($this->getBackendUser());
+    }
+
+    public function injectPageRenderer(PageRenderer $pageRenderer): void
+    {
+        $this->pageRenderer = $pageRenderer;
     }
 
     protected function htmlResponse(string $html = null): ResponseInterface
@@ -59,6 +71,11 @@ trait ModuleTemplate
         /** @var ExtbaseRequestParameters $extbase */
         $extbase = $this->request->getAttribute('extbase');
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+
+        foreach ($this->requireJsModules as $requireJsModule) {
+            $this->pageRenderer->loadRequireJsModule($requireJsModule);
+        }
+
         $menuRegistry = $moduleTemplate->getDocHeaderComponent()->getMenuRegistry();
         $menu = $menuRegistry->makeMenu();
         $menu->setIdentifier('module_selector');

@@ -2,33 +2,13 @@
 	<h1>
 		<f:translate extensionName="logs" key="filter">filter</f:translate>
 	</h1>
-	<f:form action="filter" object="{filter}" objectName="filter" style="margin-bottom:15px;">
+	<f:form action="filter" object="{filter}" objectName="filter" style="margin-bottom:15px;" additionalAttributes="{autocomplete: 'off'}">
 		<fieldset class="form-section">
 			<div class="row">
-				<div class="form-group col-sm-3">
-					<label for="tx_logs_filter_request_id">
-						<f:translate extensionName="logs" key="filter.request_id">request id</f:translate>
-					</label>
-					<f:form.textfield property="requestId" id="tx_logs_filter_request_id" class="form-control form-control-adapt" />
-				</div>
-				<div class="form-group col-sm-3">
-					<label for="tx_logs_filter_component">
-						<f:translate extensionName="logs" key="filter.component">component</f:translate>
-					</label>
-					<f:form.textfield property="component" id="tx_logs_filter_component" class="form-control form-control-adapt" />
-				</div>
-				<div class="form-group col-sm-3">
-					<label for="tx_logs_filter_from_time">
-						<f:translate extensionName="logs" key="filter.from_time">from time</f:translate>
-					</label>
-					<f:form.textfield property="fromTime" id="tx_logs_filter_from_time" class="form-control form-control-adapt" />
-				</div>
-				<div class="form-group col-sm-3">
-					<label for="tx_logs_filter_to_time">
-						<f:translate extensionName="logs" key="filter.to_time">to time</f:translate>
-					</label>
-					<f:form.textfield property="toTime" id="tx_logs_filter_to_time" class="form-control form-control-adapt" />
-				</div>
+				<f:render partial="Log/Filter/Fields/Input" arguments="{label: 'filter.request_id', property: 'requestId'}" />
+				<f:render partial="Log/Filter/Fields/Input" arguments="{label: 'filter.component', property: 'component'}" />
+				<f:render partial="Log/Filter/Fields/DateTime" arguments="{label: 'filter.from_time', property: 'fromTime'}" />
+				<f:render partial="Log/Filter/Fields/DateTime" arguments="{label: 'filter.to_time', property: 'toTime'}" />
 			</div>
 		</fieldset>
 		<fieldset class="form-section">

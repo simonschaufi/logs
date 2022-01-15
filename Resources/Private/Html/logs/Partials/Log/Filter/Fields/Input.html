@@ -1,0 +1,31 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	  xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
+	  data-namespace-typo3-fluid="true"
+>
+	<f:comment>
+		Variable:
+		* label: label in EXT:logs/Resources/Private/Language/locallang.xlf
+		* property: Property name of the model's field
+	</f:comment>
+
+	<div class="form-group col col-sm-3">
+		<label for="tx_logs_filter_{property}">
+			<f:translate extensionName="logs" key="{label}">{label}</f:translate>
+		</label>
+		<div class="formengine-field-item">
+			<div class="form-control-wrap" style="max-width: 204px">
+				<div class="form-wizards-wrap">
+					<div class="form-wizards-element">
+						<div class="input-group">
+							<f:form.textfield property="{property}"
+											  id="tx_logs_filter_{property}"
+											  class="form-control form-control-adapt t3js-clearable"
+											  data="{lpignore: 'true'}"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>
