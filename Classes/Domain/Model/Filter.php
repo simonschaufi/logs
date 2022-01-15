@@ -16,9 +16,9 @@ class Filter
 
     protected string $level = LogLevel::NOTICE;
 
-    protected ?int $fromTime;
+    protected ?int $fromTime = null;
 
-    protected ?int $toTime;
+    protected ?int $toTime = null;
 
     protected bool $showData = false;
 
