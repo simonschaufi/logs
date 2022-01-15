@@ -33,27 +33,17 @@ qa-lint-composer:
 	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php:7.2-fpm composer validate --strict
 
 ## PHP lint for all language levels
-qa-lint-php-all: qa-lint-php-7.1 qa-lint-php-7.2 qa-lint-php-7.3 qa-lint-php-7.4
-
-## PHP lint for language level 7.1
-qa-lint-php-7.1:
-	echo "$(EMOJI_digit_seven)$(EMOJI_digit_one) $(EMOJI_elephant) PHP lint 7.1"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php-parallel-lint:7.1 parallel-lint Classes/
-
-## PHP lint for language level 7.2
-qa-lint-php-7.2:
-	echo "$(EMOJI_digit_seven)$(EMOJI_digit_two) $(EMOJI_elephant) PHP lint 7.2"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php-parallel-lint:7.2 parallel-lint Classes/
-
-## PHP lint for language level 7.3
-qa-lint-php-7.3:
-	echo "$(EMOJI_digit_seven)$(EMOJI_digit_three) $(EMOJI_elephant) PHP lint 7.3"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php-parallel-lint:7.3 parallel-lint Classes/
+qa-lint-php-all: qa-lint-php-7.4 qa-lint-php-8.0
 
 ## PHP lint for language level 7.4
 qa-lint-php-7.4:
 	echo "$(EMOJI_digit_seven)$(EMOJI_digit_four) $(EMOJI_elephant) PHP lint 7.4"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php-parallel-lint:7.4 parallel-lint Classes/
+	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:7.4-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
+
+## PHP lint for language level 7.4
+qa-lint-php-8.0:
+	echo "$(EMOJI_digit_seven)$(EMOJI_digit_four) $(EMOJI_elephant) PHP lint 8.0"
+	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:8.0-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
 
 ## TYPO3 typoscript lint
 qa-lint-typoscript:
