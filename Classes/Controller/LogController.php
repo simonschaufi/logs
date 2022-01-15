@@ -86,11 +86,6 @@ class LogController extends ActionController
         $this->redirect('filter');
     }
 
-    /**
-     * @return BackendUserAuthentication
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];

@@ -72,9 +72,6 @@ class ReaderFactory
         return sha1(json_encode($configValues));
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
     protected function getLogConfiguration(): array
     {
         return $GLOBALS['TYPO3_CONF_VARS']['LOG'];

@@ -50,9 +50,6 @@ class EraserFactory
         return $logReader;
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
     protected function getLogConfiguration(): array
     {
         return $GLOBALS['TYPO3_CONF_VARS']['LOG'];
