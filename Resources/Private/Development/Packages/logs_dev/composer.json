@@ -1,5 +1,5 @@
 {
-    "name": "co-stack/foo",
+    "name": "co-stack/logs-dev",
     "type": "typo3-cms-extension",
     "description": "Test extension to create log entries in the development environment",
     "license": "GPL-2.0-or-later",
@@ -11,16 +11,17 @@
     ],
     "autoload": {
         "psr-4": {
-            "CoStack\\Foo\\": "Classes"
+            "CoStack\\LogsDev\\": "Classes"
         }
     },
     "require": {
         "typo3/cms-core": "^11.5",
-        "fakerphp/faker": "^v1.17.0"
+        "fakerphp/faker": "^v1.17.0",
+        "co-stack/logs": "*"
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "foo"
+            "extension-key": "logs_dev"
         }
     }
 }

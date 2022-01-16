@@ -42,7 +42,8 @@
         }
     },
     "require-dev": {
-        "co-stack/foo": "@dev",
+        "co-stack/logs-dev": "@dev",
+        "typo3/cms-lowlevel": "^11.5",
         "typo3/minimal": "^v11.5"
     },
     "scripts": {
@@ -53,7 +54,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "./Tests/Extension/*"
+            "url": "Resources/Private/Development/Packages/*"
         }
     ]
 }

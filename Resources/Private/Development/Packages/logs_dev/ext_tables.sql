@@ -1,4 +1,4 @@
-CREATE TABLE tx_foo_log
+CREATE TABLE tx_logsdev_log
 (
     request_id varchar(13)         DEFAULT ''  NOT NULL,
     time_micro double(16, 4)                   NOT NULL default '0.0000',

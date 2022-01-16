@@ -1,7 +1,7 @@
 <?php
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'co-stack.com Foo',
-    'description' => 'Test extension to create log entries in the development environment',
+    'title' => 'co-stack.com logs-dev',
+    'description' => 'Development extension to create log entries in the development environment',
     'category' => 'misc',
     'state' => 'stable',
     'uploadfolder' => 0,
@@ -14,6 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'typo3' => '11.5.0-11.99.99',
+            'logs' => '*'
         ],
         'conflicts' => [],
         'suggests' => [],

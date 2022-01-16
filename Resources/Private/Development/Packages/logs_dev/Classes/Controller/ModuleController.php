@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CoStack\Foo\Controller;
+namespace CoStack\LogsDev\Controller;
 
 use Faker\Factory;
 use Psr\Http\Message\ResponseInterface;
