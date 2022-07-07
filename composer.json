@@ -9,16 +9,20 @@
         }
     },
     "require": {
-        "php": ">=7.2",
+        "php": "^7.4",
         "ext-json": "*",
         "ext-pdo": "*",
-        "typo3/cms-core": "^9.5 || ^10.4",
-        "psr/log": "^1.0"
+        "psr/log": "^1.0",
+        "typo3/cms-core": "^10.4 || ^11.5"
     },
     "config": {
         "vendor-dir": ".Build/vendor",
         "bin-dir": ".Build/bin",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        }
     },
     "extra": {
         "branch-alias": {
@@ -26,13 +30,13 @@
         },
         "typo3/cms": {
             "extension-key": "logs",
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
             "web-dir": ".Build/Web",
             "app-dir": ".Build"
         }
     },
     "require-dev": {
-        "typo3/minimal": "^v10.4.0"
+        "rector/rector": "0.13.4",
+        "typo3/minimal": "^11.5.0"
     },
     "scripts": {
         "post-autoload-dump": [

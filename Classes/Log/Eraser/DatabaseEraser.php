@@ -13,16 +13,8 @@ class DatabaseEraser implements EraserInterface
 {
     protected $table = 'sys_log';
 
-    /**
-     * @var Connection
-     */
-    protected $connection = null;
+    protected Connection $connection;
 
-    /**
-     * DatabaseEraser constructor.
-     *
-     * @param array|null $configuration
-     */
     public function __construct(array $configuration = null)
     {
         if (null !== $configuration && isset($configuration['logTable'])) {
@@ -33,19 +25,11 @@ class DatabaseEraser implements EraserInterface
         $this->connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table);
     }
 
-    /**
-     * @param Log $log
-     */
-    public function delete(Log $log)
+    public function delete(Log $log): int
     {
-        $this->connection->delete($this->table, $this->getWhere($log));
+        return $this->connection->delete($this->table, $this->getWhere($log));
     }
 
-    /**
-     * @param Log $log
-     *
-     * @return array
-     */
     protected function getWhere(Log $log): array
     {
         return [
@@ -57,19 +41,11 @@ class DatabaseEraser implements EraserInterface
         ];
     }
 
-    /**
-     * @param Log $log
-     */
-    public function deleteAlike(Log $log)
+    public function deleteAlike(Log $log): int
     {
-        $this->connection->delete($this->table, $this->getWhereAlike($log));
+        return $this->connection->delete($this->table, $this->getWhereAlike($log));
     }
 
-    /**
-     * @param Log $log
-     *
-     * @return array
-     */
     protected function getWhereAlike(Log $log): array
     {
         return [

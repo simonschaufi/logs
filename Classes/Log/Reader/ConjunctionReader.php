@@ -7,34 +7,22 @@ namespace CoStack\Logs\Log\Reader;
 use CoStack\Logs\Domain\Model\Filter;
 use CoStack\Logs\Domain\Model\Log;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\Exception\PropertyNotAccessibleException;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-
-use function array_merge;
-use function array_slice;
-use function strcmp;
-use function usort;
 
 class ConjunctionReader implements ReaderInterface
 {
     /**
      * @var ReaderInterface[]
      */
-    protected $readers = [];
+    protected array $readers = [];
 
-    /**
-     * ConjunctionReader constructor.
-     *
-     * @param array|null $configuration
-     */
     public function __construct(array $configuration = null)
     {
         $readerFactory = GeneralUtility::makeInstance(ReaderFactory::class);
         $this->readers = $readerFactory->getReadersForWriters($configuration);
     }
 
-    /**
-     * @return array
-     */
     public static function getDefaultConfigForUniqueKeys(): array
     {
         return [];
@@ -42,8 +30,8 @@ class ConjunctionReader implements ReaderInterface
 
     /**
      * @param Filter $filter
-     *
      * @return Log[]
+     * @throws PropertyNotAccessibleException
      */
     public function findByFilter(Filter $filter): array
     {
@@ -77,7 +65,7 @@ class ConjunctionReader implements ReaderInterface
     /**
      * @param ReaderInterface[] $readers
      */
-    public function setReaders(array $readers)
+    public function setReaders(array $readers): void
     {
         $this->readers = $readers;
     }
@@ -85,17 +73,14 @@ class ConjunctionReader implements ReaderInterface
     /**
      * @param ReaderInterface[] $readers
      */
-    public function addReaders(array $readers)
+    public function addReaders(array $readers): void
     {
         foreach ($readers as $reader) {
             $this->addReader($reader);
         }
     }
 
-    /**
-     * @param ReaderInterface $reader
-     */
-    public function addReader(ReaderInterface $reader)
+    public function addReader(ReaderInterface $reader): void
     {
         $this->readers[] = $reader;
     }

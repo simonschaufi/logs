@@ -6,6 +6,7 @@ namespace CoStack\Logs\Log\Reader;
 
 use CoStack\Logs\Domain\Model\Filter;
 use CoStack\Logs\Domain\Model\Log;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Statement;
 use PDO;
 use TYPO3\CMS\Core\Database\Connection;
@@ -13,33 +14,14 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Log\LogLevel;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-use function array_map;
-use function json_decode;
-use function strlen;
-use function substr;
-
 class DatabaseReader implements ReaderInterface
 {
-    /**
-     * @var array
-     */
-    protected $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
+    protected array $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
 
-    /**
-     * @var string
-     */
-    protected $table = '';
+    protected string $table = '';
 
-    /**
-     * @var Connection|null
-     */
-    protected $connection = null;
+    protected ?Connection $connection = null;
 
-    /**
-     * DatabaseReader constructor.
-     *
-     * @param array|null $configuration
-     */
     public function __construct(array $configuration = null)
     {
         if (null !== $configuration && isset($configuration['logTable'])) {
@@ -59,16 +41,15 @@ class DatabaseReader implements ReaderInterface
     }
 
     /**
-     * @param Filter $filter
-     *
      * @return Log[]
+     * @throws DBALException
      */
     public function findByFilter(Filter $filter): array
     {
         $query = $this->connection->createQueryBuilder();
         $query->getRestrictions()->removeAll();
 
-        $quote = function (string $field) use ($query): string {
+        $quote = static function (string $field) use ($query): string {
             return $query->quoteIdentifier($field);
         };
         $selectFields = array_map($quote, $this->selectFields);
@@ -122,8 +103,6 @@ class DatabaseReader implements ReaderInterface
     }
 
     /**
-     * @param Statement $statement
-     *
      * @return Log[]
      */
     protected function fetchLogsByStatement(Statement $statement): array

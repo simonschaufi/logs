@@ -33,7 +33,7 @@ qa-lint-composer:
 	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php:7.2-fpm composer validate --strict
 
 ## PHP lint for all language levels
-qa-lint-php-all: qa-lint-php-7.1 qa-lint-php-7.2 qa-lint-php-7.3 qa-lint-php-7.4
+qa-lint-php-all: qa-lint-php-7.4
 
 ## PHP lint for language level 7.1
 qa-lint-php-7.1:

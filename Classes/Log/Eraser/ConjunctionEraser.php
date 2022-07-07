@@ -12,11 +12,9 @@ class ConjunctionEraser implements EraserInterface
     /**
      * @var EraserInterface[]
      */
-    protected $eraser = [];
+    protected array $eraser = [];
 
     /**
-     * @param array|null $configuration
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __construct(array $configuration = null)
@@ -25,23 +23,21 @@ class ConjunctionEraser implements EraserInterface
         $this->eraser = $eraserFactory->getErasersForWriters($configuration);
     }
 
-    /**
-     * @param Log $log
-     */
-    public function delete(Log $log)
+    public function delete(Log $log): int
     {
+        $deleted = 0;
         foreach ($this->eraser as $eraser) {
-            $eraser->delete($log);
+            $deleted += $eraser->delete($log);
         }
+        return $deleted;
     }
 
-    /**
-     * @param Log $log
-     */
-    public function deleteAlike(Log $log)
+    public function deleteAlike(Log $log): int
     {
+        $deleted = 0;
         foreach ($this->eraser as $eraser) {
-            $eraser->deleteAlike($log);
+            $deleted += $eraser->deleteAlike($log);
         }
+        return $deleted;
     }
 }

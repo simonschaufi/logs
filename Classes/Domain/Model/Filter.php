@@ -12,55 +12,25 @@ class Filter
     public const SORTING_DESC = 'DESC';
     public const SORTING_ASC = 'ASC';
 
-    /**
-     * @var string
-     */
-    protected $requestId = '';
+    protected string $requestId = '';
 
-    /**
-     * @var string
-     */
-    protected $level = LogLevel::NOTICE;
+    protected string $level = LogLevel::NOTICE;
 
-    /**
-     * @var int|null
-     */
-    protected $fromTime;
+    protected ?int $fromTime = null;
 
-    /**
-     * @var int|null
-     */
-    protected $toTime;
+    protected ?int $toTime = null;
 
-    /**
-     * @var bool
-     */
-    protected $showData = false;
+    protected bool $showData = false;
 
-    /**
-     * @var string
-     */
-    protected $component = '';
+    protected string $component = '';
 
-    /**
-     * @var bool
-     */
-    protected $fullMessage = true;
+    protected bool $fullMessage = true;
 
-    /**
-     * @var int
-     */
-    protected $limit = 150;
+    protected int $limit = 150;
 
-    /**
-     * @var string
-     */
-    protected $orderField = Log::FIELD_TIME_MICRO;
+    protected string $orderField = Log::FIELD_TIME_MICRO;
 
-    /**
-     * @var string
-     */
-    protected $orderDirection = self::SORTING_DESC;
+    protected string $orderDirection = self::SORTING_DESC;
 
     public function getRequestId(): string
     {
@@ -167,14 +137,14 @@ class Filter
     public function getLogLevels(): array
     {
         return [
-            LogLevel::EMERGENCY => '0 - ' . LogLevel::EMERGENCY,
-            LogLevel::ALERT => '1 - ' . LogLevel::ALERT,
-            LogLevel::CRITICAL => '2 - ' . LogLevel::CRITICAL,
-            LogLevel::ERROR => '3 - ' . LogLevel::ERROR,
-            LogLevel::WARNING => '4 - ' . LogLevel::WARNING,
-            LogLevel::NOTICE => '5 - ' . LogLevel::NOTICE,
-            LogLevel::INFO => '6 - ' . LogLevel::INFO,
-            LogLevel::DEBUG => '7 - ' . LogLevel::DEBUG,
+            LogLevel::EMERGENCY => LogLevel::EMERGENCY . ' (' . LogLevel::EMERGENCY . ')',
+            LogLevel::ALERT => LogLevel::ALERT . ' (' . LogLevel::ALERT . ')',
+            LogLevel::CRITICAL => LogLevel::CRITICAL . ' (' . LogLevel::CRITICAL . ')',
+            LogLevel::ERROR => LogLevel::ERROR . ' (' . LogLevel::ERROR . ')',
+            LogLevel::WARNING => LogLevel::WARNING . ' (' . LogLevel::WARNING . ')',
+            LogLevel::NOTICE => LogLevel::NOTICE . ' (' . LogLevel::NOTICE . ')',
+            LogLevel::INFO => LogLevel::INFO . ' (' . LogLevel::INFO . ')',
+            LogLevel::DEBUG => LogLevel::DEBUG . ' (' . LogLevel::DEBUG . ')',
         ];
     }
 

@@ -1,6 +1,8 @@
 <?php
 (static function () {
-    $configuration = (array)@unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['logs']);
+    $configuration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+    )->get('logs');
 
     if (empty($configuration['moduleConfig'])) {
         $configuration['moduleConfig'] = 'tools';
@@ -8,13 +10,13 @@
 
     if ($configuration['moduleConfig'] !== 'disable') {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-            'CoStack.Logs',
+            'Logs',
             $configuration['moduleConfig'],
             'logs',
             '',
             [
-                'Log' => 'filter,delete,deleteAlike',
-                'Deprecation' => 'filter,delete'
+                \CoStack\Logs\Controller\LogController::class => 'filter,delete,deleteAlike',
+                \CoStack\Logs\Controller\DeprecationController::class => 'filter,delete'
             ],
             [
                 'access' => 'user,group',

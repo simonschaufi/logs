@@ -8,8 +8,7 @@ use Closure;
 use DateTime;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-
-use function strpos;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * @SuppressWarnings(PHPMD.LongVariable)
@@ -17,35 +16,15 @@ use function strpos;
  */
 class MicrotimeViewHelper extends AbstractViewHelper
 {
-    public function initializeArguments()
+    use CompileWithRenderStatic;
+
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('microTime', 'float', 'Value returned by microtime(true)', true);
         $this->registerArgument('format', 'string', 'Resulting format', false, 'Y-m-d H:i:s.u');
     }
 
-    /**
-     * @return string
-     */
-    public function render(): string
-    {
-        return static::renderStatic(
-            [
-                'microTime' => $this->arguments['microTime'],
-                'format' => $this->arguments['format'],
-            ],
-            $this->buildRenderChildrenClosure(),
-            $this->renderingContext
-        );
-    }
-
-    /**
-     * @param array $arguments
-     * @param Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
-     * @return string
-     */
     public static function renderStatic(
         array $arguments,
         Closure $renderChildrenClosure,

@@ -4,29 +4,35 @@ declare(strict_types=1);
 
 namespace CoStack\Logs\Controller;
 
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-use function asort;
-use function fclose;
-use function fgets;
-use function fopen;
-use function fwrite;
-use function rename;
-use function sha1;
-use function strpos;
-use function substr;
-use function uniqid;
-use function unlink;
-
 class DeprecationController extends ActionController
 {
     private const STATIC_PREFIX = ' component="TYPO3.CMS.deprecations":';
 
-    public function filterAction(): void
+    private ModuleTemplateFactory $moduleTemplateFactory;
+
+    private ModuleTemplate $moduleTemplate;
+
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
     {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
+
+    public function filterAction(): ResponseInterface
+    {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
+        $this->moduleTemplate->setTitle('Deprecation');
+
+        $this->addMainMenu('filter', 'Deprecation');
+
         $file = $this->getLogFilePath();
         $stream = fopen($file, 'rb');
 
@@ -69,6 +75,10 @@ class DeprecationController extends ActionController
         }
 
         $this->view->assign('deprecations', $deprecations);
+
+        $this->moduleTemplate->setContent($this->view->render());
+
+        return new HtmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
@@ -133,9 +143,32 @@ class DeprecationController extends ActionController
         $this->redirect('filter');
     }
 
+    protected function addMainMenu(string $currentAction, string $currentController): void
+    {
+        $menu = $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->makeMenu();
+        $menu->setIdentifier('LogsMainModuleMenu');
+        $menu->addMenuItem(
+            $menu->makeMenuItem()
+                ->setTitle(self::translate('logs'))
+                ->setHref($this->uriBuilder->uriFor('filter', null, 'Log'))
+                ->setActive($currentAction === 'filter' && $currentController === 'Logs')
+        );
+        $menu->addMenuItem(
+            $menu->makeMenuItem()
+                ->setTitle(self::translate('deprecations'))
+                ->setHref($this->uriBuilder->uriFor('filter', null, 'Deprecation'))
+                ->setActive($currentAction === 'filter' && $currentController === 'Deprecation')
+        );
+        $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
+    }
+
     protected function getLogFilePath(): string
     {
-        $writer = new FileWriter(['logFileInfix' => 'deprecations']);
-        return $writer->getLogFile();
+        return (new FileWriter(['logFileInfix' => 'deprecations']))->getLogFile();
+    }
+
+    protected static function translate($key): ?string
+    {
+        return LocalizationUtility::translate($key, 'Logs');
     }
 }

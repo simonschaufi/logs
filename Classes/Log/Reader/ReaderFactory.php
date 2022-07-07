@@ -7,10 +7,6 @@ namespace CoStack\Logs\Log\Reader;
 use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-use function is_array;
-use function json_encode;
-use function sha1;
-
 class ReaderFactory
 {
     protected const WRITER_READER_MAPPING = [
@@ -24,11 +20,9 @@ class ReaderFactory
      *
      * @return array
      */
-    public function getReadersForWriters(array $logConfiguration = null, array $logReader = [])
+    public function getReadersForWriters(array $logConfiguration = null, array $logReader = []): array
     {
-        if (null === $logConfiguration) {
-            $logConfiguration = $this->getLogConfiguration();
-        }
+        $logConfiguration = $logConfiguration ?? $GLOBALS['TYPO3_CONF_VARS']['LOG'];
 
         $writer = $this->collectWriter($logConfiguration);
 
@@ -41,27 +35,23 @@ class ReaderFactory
         return $logReader;
     }
 
-    /**
-     * @param array $logConfiguration
-     * @param array $writer
-     *
-     * @return array
-     */
     protected function collectWriter(array $logConfiguration, array $writer = []): array
     {
         foreach ($logConfiguration as $key => $value) {
-            if (is_array($value)) {
-                if ('writerConfiguration' !== $key) {
-                    $writer = $this->collectWriter($value, $writer);
-                } else {
-                    foreach ($value as $writerConf) {
-                        if (is_array($writerConf)) {
-                            foreach ($writerConf as $class => $writerConfig) {
-                                if (isset(static::WRITER_READER_MAPPING[$class])) {
-                                    $configKey = $this->getUniqueConfigKey($class, $writerConfig);
-                                    $writer[$class][$configKey] = $writerConfig;
-                                }
-                            }
+            if (!is_array($value)) {
+                continue;
+            }
+            if ('writerConfiguration' !== $key) {
+                $writer = $this->collectWriter($value, $writer);
+            } else {
+                foreach ($value as $writerConf) {
+                    if (!is_array($writerConf)) {
+                        continue;
+                    }
+                    foreach ($writerConf as $class => $writerConfig) {
+                        if (isset(static::WRITER_READER_MAPPING[$class])) {
+                            $configKey = $this->getUniqueConfigKey($class, $writerConfig);
+                            $writer[$class][$configKey] = $writerConfig;
                         }
                     }
                 }
@@ -70,12 +60,6 @@ class ReaderFactory
         return $writer;
     }
 
-    /**
-     * @param string $class
-     * @param array $writerConfig
-     *
-     * @return string
-     */
     protected function getUniqueConfigKey(string $class, array $writerConfig): string
     {
         /** @var ReaderInterface $readerClass */
@@ -85,15 +69,5 @@ class ReaderFactory
             $configValues[] = $writerConfig[$field] ?? $value;
         }
         return sha1(json_encode($configValues));
-    }
-
-    /**
-     * @return array
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
-    protected function getLogConfiguration(): array
-    {
-        return $GLOBALS['TYPO3_CONF_VARS']['LOG'];
     }
 }
