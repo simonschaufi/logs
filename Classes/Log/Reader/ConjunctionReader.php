@@ -20,7 +20,7 @@ class ConjunctionReader implements ReaderInterface
     public function __construct(array $configuration = null)
     {
         $readerFactory = GeneralUtility::makeInstance(ReaderFactory::class);
-        $this->readers = $readerFactory->getReadersForWriters($configuration);
+        $this->readers = $readerFactory->getReadersForWriters($GLOBALS['TYPO3_CONF_VARS']['LOG']);
     }
 
     public static function getDefaultConfigForUniqueKeys(): array

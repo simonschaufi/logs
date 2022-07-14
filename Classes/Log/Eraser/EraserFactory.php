@@ -21,8 +21,6 @@ class EraserFactory
      */
     public function getErasersForWriters(array $logConfiguration = null): array
     {
-        $logConfiguration = $logConfiguration ?? $GLOBALS['TYPO3_CONF_VARS']['LOG'];
-
         $logReader = [];
         foreach ($logConfiguration as $key => $value) {
             if (!is_array($value)) {

@@ -22,8 +22,6 @@ class ReaderFactory
      */
     public function getReadersForWriters(array $logConfiguration = null, array $logReader = []): array
     {
-        $logConfiguration = $logConfiguration ?? $GLOBALS['TYPO3_CONF_VARS']['LOG'];
-
         $writer = $this->collectWriter($logConfiguration);
 
         foreach ($writer as $class => $writerConfigurations) {
