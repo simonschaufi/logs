@@ -31,8 +31,6 @@ class LogController extends ActionController implements LoggerAwareInterface
 
     private ModuleTemplate $moduleTemplate;
 
-    protected ?array $logConfiguration = null;
-
     public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
     {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
@@ -69,7 +67,7 @@ class LogController extends ActionController implements LoggerAwareInterface
         if (null === $filter) {
             $filter = GeneralUtility::makeInstance(Filter::class);
         }
-        $reader = GeneralUtility::makeInstance(ConjunctionReader::class, $this->logConfiguration);
+        $reader = GeneralUtility::makeInstance(ConjunctionReader::class);
         $logs = $reader->findByFilter($filter);
 
         $this->view->assign('filter', $filter);
@@ -91,7 +89,7 @@ class LogController extends ActionController implements LoggerAwareInterface
         string $message
     ): void {
         $log = GeneralUtility::makeInstance(Log::class, $requestId, $timeMicro, $component, $level, $message, []);
-        $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class, $this->logConfiguration);
+        $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class);
         $numberOfDeletedRows = $conjunctionReader->delete($log);
 
         $this->logger->debug('Test: ' . $numberOfDeletedRows);
@@ -107,7 +105,7 @@ class LogController extends ActionController implements LoggerAwareInterface
     public function deleteAlikeAction(string $component, int $level, string $message): void
     {
         $log = GeneralUtility::makeInstance(Log::class, '', 0.0, $component, $level, $message, []);
-        $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class, $this->logConfiguration);
+        $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class);
         $conjunctionReader->deleteAlike($log);
         $this->redirect('filter');
     }
