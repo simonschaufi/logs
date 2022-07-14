@@ -48,7 +48,7 @@ class Log
         return $this->requestId;
     }
 
-    public function setRequestId(string $requestId)
+    public function setRequestId(string $requestId): void
     {
         $this->requestId = $requestId;
     }
@@ -58,7 +58,7 @@ class Log
         return $this->timeMicro;
     }
 
-    public function setTimeMicro(float $timeMicro)
+    public function setTimeMicro(float $timeMicro): void
     {
         $this->timeMicro = $timeMicro;
     }
@@ -68,7 +68,7 @@ class Log
         return $this->component;
     }
 
-    public function setComponent(string $component)
+    public function setComponent(string $component): void
     {
         $this->component = $component;
     }
@@ -83,7 +83,7 @@ class Log
         return LogLevel::getName($this->level);
     }
 
-    public function setLevel(int $level)
+    public function setLevel(int $level): void
     {
         $this->level = $level;
     }
@@ -93,7 +93,7 @@ class Log
         return $this->message;
     }
 
-    public function setMessage(string $message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
@@ -103,7 +103,7 @@ class Log
         return $this->data;
     }
 
-    public function setData(array $data)
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
