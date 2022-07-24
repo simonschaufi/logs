@@ -35,10 +35,13 @@ class ConjunctionReader implements ReaderInterface
      */
     public function findByFilter(Filter $filter): array
     {
-        $logs = [];
+        $logCollections = [];
         foreach ($this->readers as $reader) {
-            $logs = array_merge($logs, $reader->findByFilter($filter));
+            $logCollections[] = $reader->findByFilter($filter);
         }
+        $logs = array_merge(...$logCollections);
+        unset($logCollections);
+
         $orderField = GeneralUtility::underscoredToUpperCamelCase($filter->getOrderField());
         $direction = Filter::SORTING_ASC === $filter->getOrderDirection() ? -1 : 1;
         usort(

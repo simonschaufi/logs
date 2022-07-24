@@ -16,18 +16,17 @@ class EraserFactory
     /**
      * @param array|null $logConfiguration Omit if you want all erasers for all configured writers or pass your writer
      *     configuration if you want only the erasers for the given writers
-     *
+     * @param array $logReader
      * @return array
      */
-    public function getErasersForWriters(array $logConfiguration = null): array
+    public function getErasersForWriters(array $logConfiguration = null, array &$logReader = []): array
     {
-        $logReader = [];
         foreach ($logConfiguration as $key => $value) {
             if (!is_array($value)) {
                 continue;
             }
             if ('writerConfiguration' !== $key) {
-                $logReader = array_merge($logReader, $this->getErasersForWriters($value));
+                $this->getErasersForWriters($value, $logReader);
             } else {
                 foreach ($value as $writer) {
                     if (!is_array($writer)) {
