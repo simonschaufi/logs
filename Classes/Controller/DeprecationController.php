@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class DeprecationController extends ActionController
@@ -86,6 +87,8 @@ class DeprecationController extends ActionController
      * 2. Copy all lines from the old to the new file which do not match the hash
      * 3. Replace the old file with the new file
      * 4. Profit
+     *
+     * @throws StopActionException
      */
     public function deleteAction(string $hash): void
     {

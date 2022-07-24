@@ -33,10 +33,11 @@ class EraserFactory
                         continue;
                     }
                     foreach ($writer as $class => $writerConfiguration) {
-                        if (isset(static::WRITER_ERASER_MAPPING[$class])) {
-                            $eraserClass = static::WRITER_ERASER_MAPPING[$class];
-                            $logReader[] = GeneralUtility::makeInstance($eraserClass, $writerConfiguration);
+                        if (!isset(static::WRITER_ERASER_MAPPING[$class])) {
+                            continue;
                         }
+                        $eraserClass = static::WRITER_ERASER_MAPPING[$class];
+                        $logReader[] = GeneralUtility::makeInstance($eraserClass, $writerConfiguration);
                     }
                 }
             }

@@ -46,7 +46,7 @@ class LogController extends ActionController implements LoggerAwareInterface
             $this->getBackendUser()->setAndSaveSessionData('tx_logs_filter', $filter);
         } else {
             $filter = $this->getBackendUser()->getSessionData('tx_logs_filter');
-            if (null !== $filter) {
+            if ($filter !== null) {
                 $this->request->setArgument('filter', $filter);
                 $this->arguments->getArgument('filter')->getPropertyMappingConfiguration()->allowAllProperties();
             }
@@ -64,11 +64,10 @@ class LogController extends ActionController implements LoggerAwareInterface
 
         $this->addMainMenu('filter', 'Log');
 
-        if (null === $filter) {
-            $filter = GeneralUtility::makeInstance(Filter::class);
+        if ($filter === null) {
+            $filter = new Filter();
         }
-        $reader = GeneralUtility::makeInstance(ConjunctionReader::class);
-        $logs = $reader->findByFilter($filter);
+        $logs = (new ConjunctionReader())->findByFilter($filter);
 
         $this->view->assign('filter', $filter);
         $this->view->assign('logs', $logs);
@@ -88,13 +87,10 @@ class LogController extends ActionController implements LoggerAwareInterface
         int $level,
         string $message
     ): void {
-        $log = GeneralUtility::makeInstance(Log::class, $requestId, $timeMicro, $component, $level, $message, []);
-        $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class);
-        $numberOfDeletedRows = $conjunctionReader->delete($log);
+        $log = new Log($requestId, $timeMicro, $component, $level, $message, []);
+        $numberOfDeletedRows = (new ConjunctionEraser())->delete($log);
 
-        $this->logger->debug('Test: ' . $numberOfDeletedRows);
-
-        //$this->addFlashMessage(sprintf(self::translate('actions.delete.message') ?? '', $numberOfDeletedRows));
+        $this->addFlashMessage(sprintf(self::translate('actions.delete.message') ?? '', $numberOfDeletedRows));
 
         $this->redirect('filter');
     }
@@ -104,9 +100,10 @@ class LogController extends ActionController implements LoggerAwareInterface
      */
     public function deleteAlikeAction(string $component, int $level, string $message): void
     {
-        $log = GeneralUtility::makeInstance(Log::class, '', 0.0, $component, $level, $message, []);
-        $conjunctionReader = GeneralUtility::makeInstance(ConjunctionEraser::class);
-        $conjunctionReader->deleteAlike($log);
+        $log = new Log('', 0.0, $component, $level, $message, []);
+        $numberOfDeletedRows = (new ConjunctionEraser())->deleteAlike($log);
+
+        $this->addFlashMessage(sprintf(self::translate('actions.delete.message') ?? '', $numberOfDeletedRows));
         $this->redirect('filter');
     }
 
@@ -137,7 +134,7 @@ class LogController extends ActionController implements LoggerAwareInterface
         return $GLOBALS['BE_USER'];
     }
 
-    protected static function translate($key): ?string
+    protected static function translate(string $key): ?string
     {
         return LocalizationUtility::translate($key, 'Logs');
     }

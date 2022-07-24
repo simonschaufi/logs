@@ -1,87 +1,90 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-	<file source-language="en" datatype="plaintext" original="messages" product-name="logs">
+	<file source-language="en" datatype="plaintext" original="messages" date="">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
 		<body>
-			<trans-unit id="filter.request_id">
-				<source>Request ID</source>
-			</trans-unit>
-			<trans-unit id="filter.from_time">
-				<source>From time</source>
-			</trans-unit>
-			<trans-unit id="filter.to_time">
-				<source>To time</source>
-			</trans-unit>
-			<trans-unit id="filter.show_data">
-				<source>Show data</source>
-			</trans-unit>
-			<trans-unit id="filter.component">
-				<source>Component</source>
-			</trans-unit>
-			<trans-unit id="filter.full_message">
-				<source>Show full messages</source>
-			</trans-unit>
-			<trans-unit id="filter.limit">
-				<source>Limit</source>
-			</trans-unit>
-			<trans-unit id="filter.order_field">
-				<source>Order field</source>
-			</trans-unit>
-			<trans-unit id="filter.time_micro">
-				<source>Microtime</source>
-			</trans-unit>
-			<trans-unit id="filter.level">
-				<source>Level</source>
-			</trans-unit>
-			<trans-unit id="filter.message">
-				<source>Message</source>
-			</trans-unit>
-			<trans-unit id="filter.order_direction">
-				<source>Order direction</source>
-			</trans-unit>
-			<trans-unit id="filter.desc">
-				<source>Descending</source>
-			</trans-unit>
-			<trans-unit id="filter.asc">
-				<source>Ascending</source>
-			</trans-unit>
-
-			<trans-unit id="verbosity">
-				<source>Verbosity</source>
-			</trans-unit>
-			<trans-unit id="search">
-				<source>Search</source>
-			</trans-unit>
-			<trans-unit id="filter">
-				<source>Filter</source>
-			</trans-unit>
-			<trans-unit id="logs">
-				<source>Logs</source>
-			</trans-unit>
 			<trans-unit id="actions">
-				<source>Actions</source>
+				<source><![CDATA[Actions]]></source>
 			</trans-unit>
-			<trans-unit id="deprecations">
-				<source>Deprecations</source>
-			</trans-unit>
-
-			<trans-unit id="delete">
-				<source>Delete</source>
-			</trans-unit>
-			<trans-unit id="delete_alike">
-				<source>Delete all alike</source>
+			<trans-unit id="actions.delete.message">
+				<source><![CDATA[Total entries deleted: %1$d]]></source>
 			</trans-unit>
 			<trans-unit id="count">
-				<source>Count</source>
+				<source><![CDATA[Count]]></source>
+			</trans-unit>
+			<trans-unit id="delete">
+				<source><![CDATA[Delete]]></source>
+			</trans-unit>
+			<trans-unit id="delete_alike">
+				<source><![CDATA[Delete all alike]]></source>
 			</trans-unit>
 			<trans-unit id="deleted_count">
-				<source>Delete %d lines</source>
+				<source><![CDATA[Delete %d lines]]></source>
 			</trans-unit>
-
+			<trans-unit id="deprecations">
+				<source><![CDATA[Deprecations]]></source>
+			</trans-unit>
 			<trans-unit id="error">
-				<source>Error</source>
+				<source><![CDATA[Error]]></source>
 			</trans-unit>
 			<trans-unit id="error.log_file_not_writable">
-				<source>Could not create a new log file</source>
+				<source><![CDATA[Could not create a new log file]]></source>
+			</trans-unit>
+			<trans-unit id="filter">
+				<source><![CDATA[Filter]]></source>
+			</trans-unit>
+			<trans-unit id="filter.asc">
+				<source><![CDATA[Ascending]]></source>
+			</trans-unit>
+			<trans-unit id="filter.component">
+				<source><![CDATA[Component]]></source>
+			</trans-unit>
+			<trans-unit id="filter.desc">
+				<source><![CDATA[Descending]]></source>
+			</trans-unit>
+			<trans-unit id="filter.from_time">
+				<source><![CDATA[From time]]></source>
+			</trans-unit>
+			<trans-unit id="filter.full_message">
+				<source><![CDATA[Show full messages]]></source>
+			</trans-unit>
+			<trans-unit id="filter.level">
+				<source><![CDATA[Level]]></source>
+			</trans-unit>
+			<trans-unit id="filter.limit">
+				<source><![CDATA[Limit]]></source>
+			</trans-unit>
+			<trans-unit id="filter.message">
+				<source><![CDATA[Message]]></source>
+			</trans-unit>
+			<trans-unit id="filter.order_direction">
+				<source><![CDATA[Order direction]]></source>
+			</trans-unit>
+			<trans-unit id="filter.order_field">
+				<source><![CDATA[Order field]]></source>
+			</trans-unit>
+			<trans-unit id="filter.request_id">
+				<source><![CDATA[Request ID]]></source>
+			</trans-unit>
+			<trans-unit id="filter.show_data">
+				<source><![CDATA[Show data]]></source>
+			</trans-unit>
+			<trans-unit id="filter.time_micro">
+				<source><![CDATA[Microtime]]></source>
+			</trans-unit>
+			<trans-unit id="filter.to_time">
+				<source><![CDATA[To time]]></source>
+			</trans-unit>
+			<trans-unit id="logs">
+				<source><![CDATA[Logs]]></source>
+			</trans-unit>
+			<trans-unit id="search">
+				<source><![CDATA[Search]]></source>
+			</trans-unit>
+			<trans-unit id="verbosity">
+				<source><![CDATA[Verbosity]]></source>
 			</trans-unit>
 		</body>
 	</file>

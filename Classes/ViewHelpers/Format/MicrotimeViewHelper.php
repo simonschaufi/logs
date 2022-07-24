@@ -33,9 +33,9 @@ class MicrotimeViewHelper extends AbstractViewHelper
         $microTime = (string)$arguments['microTime'];
         $format = $arguments['format'];
 
-        if (false !== strpos($microTime, '.')) {
+        if (strpos($microTime, '.') !== false) {
             $dateTime = DateTime::createFromFormat('U.u', $microTime);
-        } elseif (false !== strpos($microTime, ' ')) {
+        } elseif (strpos($microTime, ' ') !== false) {
             $dateTime = DateTime::createFromFormat('u U', $microTime);
         } else {
             $dateTime = DateTime::createFromFormat('U', $microTime);

@@ -19,6 +19,7 @@ class ReaderFactory
      * @param array $logReader
      *
      * @return array
+     * @throws \JsonException
      */
     public function getReadersForWriters(array $logConfiguration = null, array $logReader = []): array
     {
@@ -33,6 +34,9 @@ class ReaderFactory
         return $logReader;
     }
 
+    /**
+     * @throws \JsonException
+     */
     protected function collectWriter(array $logConfiguration, array $writer = []): array
     {
         foreach ($logConfiguration as $key => $value) {
@@ -58,6 +62,9 @@ class ReaderFactory
         return $writer;
     }
 
+    /**
+     * @throws \JsonException
+     */
     protected function getUniqueConfigKey(string $class, array $writerConfig): string
     {
         /** @var ReaderInterface $readerClass */
@@ -66,6 +73,6 @@ class ReaderFactory
         foreach ($readerClass::getDefaultConfigForUniqueKeys() as $field => $value) {
             $configValues[] = $writerConfig[$field] ?? $value;
         }
-        return sha1(json_encode($configValues));
+        return sha1(json_encode($configValues, JSON_THROW_ON_ERROR));
     }
 }

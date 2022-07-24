@@ -19,8 +19,7 @@ class ConjunctionEraser implements EraserInterface
      */
     public function __construct(array $configuration = null)
     {
-        $eraserFactory = GeneralUtility::makeInstance(EraserFactory::class);
-        $this->eraser = $eraserFactory->getErasersForWriters($GLOBALS['TYPO3_CONF_VARS']['LOG']);
+        $this->eraser = (new EraserFactory())->getErasersForWriters($GLOBALS['TYPO3_CONF_VARS']['LOG']);
     }
 
     public function delete(Log $log): int

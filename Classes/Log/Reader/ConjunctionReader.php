@@ -17,10 +17,12 @@ class ConjunctionReader implements ReaderInterface
      */
     protected array $readers = [];
 
+    /**
+     * @throws \JsonException
+     */
     public function __construct(array $configuration = null)
     {
-        $readerFactory = GeneralUtility::makeInstance(ReaderFactory::class);
-        $this->readers = $readerFactory->getReadersForWriters($GLOBALS['TYPO3_CONF_VARS']['LOG']);
+        $this->readers = (new ReaderFactory())->getReadersForWriters($GLOBALS['TYPO3_CONF_VARS']['LOG']);
     }
 
     public static function getDefaultConfigForUniqueKeys(): array

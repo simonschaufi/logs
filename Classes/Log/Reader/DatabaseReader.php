@@ -24,7 +24,7 @@ class DatabaseReader implements ReaderInterface
 
     public function __construct(array $configuration = null)
     {
-        if (null !== $configuration && isset($configuration['logTable'])) {
+        if ($configuration !== null && isset($configuration['logTable'])) {
             $this->table = $configuration['logTable'];
         } else {
             $this->table = 'sys_log';
@@ -43,19 +43,19 @@ class DatabaseReader implements ReaderInterface
     /**
      * @return Log[]
      * @throws DBALException
+     * @throws \JsonException
      */
     public function findByFilter(Filter $filter): array
     {
         $query = $this->connection->createQueryBuilder();
         $query->getRestrictions()->removeAll();
 
-        $quote = static function (string $field) use ($query): string {
+        $selectFields = array_map(static function (string $field) use ($query): string {
             return $query->quoteIdentifier($field);
-        };
-        $selectFields = array_map($quote, $this->selectFields);
+        }, $this->selectFields);
 
         if (!$filter->isFullMessage()) {
-            $selectFields[4] = 'CONCAT(LEFT(' . $selectFields[4] . ' , 120), "...") as message';
+            $selectFields[4] = 'CONCAT(LEFT(' . $selectFields[4] . ', 120), "...") as message';
         }
         if (!$filter->isShowData()) {
             $selectFields[5] = '"- {}"';
@@ -71,7 +71,7 @@ class DatabaseReader implements ReaderInterface
         $requestId = $filter->getRequestId();
         if (!empty($requestId)) {
             /* @see \TYPO3\CMS\Core\Core\Bootstrap::init for requestId string length */
-            if (13 === strlen($requestId)) {
+            if (strlen($requestId) === 13) {
                 $constraint = $query->expr()->eq(Log::FIELD_REQUEST_ID, $query->createNamedParameter($requestId));
             } else {
                 $constraint = $query->expr()->like(Log::FIELD_REQUEST_ID, $query->createNamedParameter("%$requestId%"));
@@ -104,6 +104,7 @@ class DatabaseReader implements ReaderInterface
 
     /**
      * @return Log[]
+     * @throws \JsonException
      */
     protected function fetchLogsByStatement(Statement $statement): array
     {
