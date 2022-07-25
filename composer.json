@@ -1,5 +1,5 @@
 {
-    "name": "co-stack/logs",
+    "name": "simonschaufi/logs",
     "type": "typo3-cms-extension",
     "description": "TYPO3 Logging API reading module and devlog extension in one",
     "license": "GPL-2.0-or-later",
@@ -14,6 +14,11 @@
         "ext-pdo": "*",
         "psr/log": "^1.0",
         "typo3/cms-core": "^10.4 || ^11.5"
+    },
+    "require-dev": {
+        "rector/rector": "0.13.4",
+        "typo3/minimal": "^11.5.0",
+        "phpmd/phpmd": "^2.12"
     },
     "config": {
         "vendor-dir": ".Build/vendor",
@@ -30,17 +35,13 @@
         },
         "typo3/cms": {
             "extension-key": "logs",
-            "web-dir": ".Build/Web",
+            "web-dir": ".Build/public",
             "app-dir": ".Build"
         }
     },
-    "require-dev": {
-        "rector/rector": "0.13.4",
-        "typo3/minimal": "^11.5.0"
-    },
     "scripts": {
         "post-autoload-dump": [
-            "ln -snf ../../../../ .Build/Web/typo3conf/ext/logs"
+            "ln -snf ../../../../ .Build/public/typo3conf/ext/logs"
         ]
     }
 }
