@@ -10,10 +10,6 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
-/**
- * @SuppressWarnings(PHPMD.LongVariable)
- * @SuppressWarnings(PHPMD.UnusedFormalParameter)
- */
 class MicrotimeViewHelper extends AbstractViewHelper
 {
     use CompileWithRenderStatic;

@@ -14,9 +14,6 @@ class ConjunctionEraser implements EraserInterface
      */
     protected array $eraser = [];
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     public function __construct(array $configuration = null)
     {
         $this->eraser = (new EraserFactory())->getErasersForWriters($GLOBALS['TYPO3_CONF_VARS']['LOG']);

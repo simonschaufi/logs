@@ -126,9 +126,6 @@ class LogController extends ActionController implements LoggerAwareInterface
         $this->moduleTemplate->getDocHeaderComponent()->getMenuRegistry()->addMenu($menu);
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
     protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
