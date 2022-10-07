@@ -11,6 +11,7 @@ use PDO;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Log\LogLevel;
+use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 use function array_map;
@@ -18,33 +19,23 @@ use function json_decode;
 use function strlen;
 use function substr;
 
-class DatabaseReader implements ReaderInterface
+class DatabaseReader implements Reader
 {
     protected array $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
     protected string $table = '';
-    protected Connection $connection;
+    protected ?Connection $connection = null;
 
-    public function __construct(?array $configuration = null)
+    public function __construct(DatabaseWriter $writer)
     {
-        if (null !== $configuration && isset($configuration['logTable'])) {
-            $this->table = $configuration['logTable'];
-        } else {
-            $this->table = 'sys_log';
-        }
+        $this->table = $writer->getLogTable();
         $this->connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table);
     }
 
-    /**
-     * @return string[]
-     */
     public static function getDefaultConfigForUniqueKeys(): array
     {
         return ['logTable' => 'sys_log'];
     }
 
-    /**
-     * @return Log[]
-     */
     public function findByFilter(Filter $filter): array
     {
         $query = $this->connection->createQueryBuilder();
@@ -114,15 +105,7 @@ class DatabaseReader implements ReaderInterface
         if (0 === (int)$statement->errorCode()) {
             while (($row = $statement->fetch())) {
                 $row[5] = $row[5] === '' ? null : json_decode(substr($row[5], 2), true);
-                $logs[] = GeneralUtility::makeInstance(
-                    Log::class,
-                    $row[0],
-                    $row[1],
-                    $row[2],
-                    $row[3],
-                    $row[4],
-                    $row[5]
-                );
+                $logs[] = new Log($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
             }
             return $logs;
         }

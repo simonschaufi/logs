@@ -7,50 +7,42 @@ namespace CoStack\Logs\Log\Eraser;
 use CoStack\Logs\Domain\Model\Log;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Log\Writer\DatabaseWriter;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class DatabaseEraser implements EraserInterface
+class DatabaseEraser implements Eraser
 {
-    protected string $table = 'sys_log';
-    protected Connection $connection;
+    private string $table;
+    private Connection $connection;
 
-    public function __construct(?array $configuration = null)
+    public function __construct(DatabaseWriter $databaseWriter)
     {
-        if (null !== $configuration && isset($configuration['logTable'])) {
-            $this->table = $configuration['logTable'];
-        } else {
-            $this->table = 'sys_log';
-        }
+        $this->table = $databaseWriter->getLogTable();
         $this->connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($this->table);
+    }
+
+    public static function getDefaultConfigForUniqueKeys(): array
+    {
+        return ['logTable' => 'sys_log'];
     }
 
     public function delete(Log $log): void
     {
-        $this->connection->delete($this->table, $this->getWhere($log));
-    }
-
-    protected function getWhere(Log $log): array
-    {
-        return [
-            'request_id' => $log->getRequestId(),
-            'time_micro' => $log->getTimeMicro(),
-            'component' => $log->getComponent(),
-            'level' => $log->getLevel(),
-            'message' => $log->getMessage(),
-        ];
+        $this->connection->delete($this->table, [
+            'request_id' => $log->requestId,
+            'time_micro' => $log->timeMicro,
+            'component' => $log->component,
+            'level' => $log->level,
+            'message' => $log->message,
+        ]);
     }
 
     public function deleteAlike(Log $log): void
     {
-        $this->connection->delete($this->table, $this->getWhereAlike($log));
-    }
-
-    protected function getWhereAlike(Log $log): array
-    {
-        return [
-            'component' => $log->getComponent(),
-            'level' => $log->getLevel(),
-            'message' => $log->getMessage(),
-        ];
+        $this->connection->delete($this->table, [
+            'component' => $log->component,
+            'level' => $log->level,
+            'message' => $log->message,
+        ]);
     }
 }

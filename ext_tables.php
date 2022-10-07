@@ -13,7 +13,8 @@
             'logs',
             '',
             [
-                \CoStack\Logs\Controller\LogController::class => 'filter,delete,deleteAlike',
+                \CoStack\Logs\Controller\LogReadingController::class => 'filter',
+                \CoStack\Logs\Controller\LogErasingController::class => 'delete,deleteAlike',
                 \CoStack\Logs\Controller\DeprecationController::class => 'filter,delete',
             ],
             [

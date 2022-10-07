@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace CoStack\Logs\Domain\Model;
 
+use DateTime;
+use DateTimeZone;
 use TYPO3\CMS\Core\Log\LogLevel;
+
+use function date_default_timezone_get;
+use function sprintf;
+use function strpos;
 
 class Log
 {
@@ -14,12 +20,12 @@ class Log
     public const FIELD_LEVEL = 'level';
     public const FIELD_MESSAGE = 'message';
     public const FIELD_DATA = 'data';
-    protected string $requestId = '';
-    protected float $timeMicro = 0.0;
-    protected string $component = '';
-    protected int $level = 0;
-    protected string $message = '';
-    protected ?array $data = [];
+    public string $requestId;
+    public float $timeMicro;
+    public string $component;
+    public int $level;
+    public string $message;
+    public ?array $data;
 
     public function __construct(
         string $requestId,
@@ -37,68 +43,34 @@ class Log
         $this->data = $data;
     }
 
-    public function getRequestId(): string
+    /**
+     * @noinspection PhpUnused Used in Partials/Log/List.html
+     */
+    public function getTimeMicroFormatted(): string
     {
-        return $this->requestId;
+        $timeMicro = (string)$this->timeMicro;
+        if (false !== strpos($timeMicro, '.')) {
+            $dateTime = DateTime::createFromFormat('U.u', $timeMicro);
+        } elseif (false !== strpos($timeMicro, ' ')) {
+            $dateTime = DateTime::createFromFormat('u U', $timeMicro);
+        } else {
+            $dateTime = DateTime::createFromFormat('U', $timeMicro);
+        }
+        $timezoneIdentifier = date_default_timezone_get();
+        $dateTime->setTimezone(new DateTimeZone($timezoneIdentifier));
+
+        return sprintf(
+            '<span title="Timezone: %s">%s</span>',
+            $timezoneIdentifier,
+            $dateTime->format('Y-m-d H:i:s.u')
+        );
     }
 
-    public function setRequestId(string $requestId)
-    {
-        $this->requestId = $requestId;
-    }
-
-    public function getTimeMicro(): float
-    {
-        return $this->timeMicro;
-    }
-
-    public function setTimeMicro(float $timeMicro)
-    {
-        $this->timeMicro = $timeMicro;
-    }
-
-    public function getComponent(): string
-    {
-        return $this->component;
-    }
-
-    public function setComponent(string $component)
-    {
-        $this->component = $component;
-    }
-
-    public function getLevel(): int
-    {
-        return $this->level;
-    }
-
+    /**
+     * @noinspection PhpUnused Used in Partials/Log/List.html
+     */
     public function getReadableLevel(): string
     {
         return LogLevel::getName($this->level);
-    }
-
-    public function setLevel(int $level)
-    {
-        $this->level = $level;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message)
-    {
-        $this->message = $message;
-    }
-
-    public function getData(): ?array
-    {
-        return $this->data;
-    }
-
-    public function setData(?array $data)
-    {
-        $this->data = $data;
     }
 }
