@@ -6,9 +6,12 @@ namespace CoStack\Logs\ViewHelpers\Format;
 
 use Closure;
 use DateTime;
+use DateTimeZone;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
+use function date_default_timezone_get;
+use function sprintf;
 use function strpos;
 
 /**
@@ -53,8 +56,8 @@ class MicrotimeViewHelper extends AbstractViewHelper
     ): string {
         $microTime = (string)$arguments['microTime'];
         $format = $arguments['format'];
-        $timezoneIdentifier = $GLOBALS['TYPO3_CONF_VARS']['SYS']['phpTimeZone'] ?? 'Universal';
-        $timezone = new \DateTimeZone($timezoneIdentifier);
+        $timezoneIdentifier = date_default_timezone_get();
+        $timezone = new DateTimeZone($timezoneIdentifier);
 
         if (false !== strpos($microTime, '.')) {
             $dateTime = DateTime::createFromFormat('U.u', $microTime);
@@ -66,7 +69,7 @@ class MicrotimeViewHelper extends AbstractViewHelper
         $dateTime->setTimezone($timezone);
 
         return sprintf(
-            '<span title="%s time">%s</span>',
+            '<span title="Timezone: %s">%s</span>',
             $timezoneIdentifier,
             $dateTime->format($format)
         );
