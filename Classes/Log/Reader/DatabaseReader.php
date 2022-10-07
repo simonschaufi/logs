@@ -21,9 +21,7 @@ use function substr;
 class DatabaseReader implements ReaderInterface
 {
     protected array $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
-
     protected string $table = '';
-
     protected Connection $connection;
 
     public function __construct(?array $configuration = null)

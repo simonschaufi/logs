@@ -23,11 +23,8 @@ use TYPO3Fluid\Fluid\View\ViewInterface;
 trait ModuleTemplate
 {
     private ModuleTemplateFactory $moduleTemplateFactory;
-
     private LanguageService $languageService;
-
     private PageRenderer $pageRenderer;
-
     /**
      * @var array<string, non-empty-array<string, string>>
      */
@@ -41,9 +38,8 @@ trait ModuleTemplate
             'controller' => 'Deprecation',
         ],
     ];
-
     private array $requireJsModules = [
-        'TYPO3/CMS/Logs/Module'
+        'TYPO3/CMS/Logs/Module',
     ];
 
     public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void

@@ -11,25 +11,15 @@ class Filter
 {
     public const SORTING_DESC = 'DESC';
     public const SORTING_ASC = 'ASC';
-
     protected string $requestId = '';
-
     protected string $level = LogLevel::NOTICE;
-
     protected ?int $fromTime = null;
-
     protected ?int $toTime = null;
-
     protected bool $showData = false;
-
     protected string $component = '';
-
     protected bool $fullMessage = true;
-
     protected int $limit = 150;
-
     protected string $orderField = Log::FIELD_TIME_MICRO;
-
     protected string $orderDirection = self::SORTING_DESC;
 
     public function getRequestId(): string

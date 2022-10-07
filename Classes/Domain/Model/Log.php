@@ -14,17 +14,11 @@ class Log
     public const FIELD_LEVEL = 'level';
     public const FIELD_MESSAGE = 'message';
     public const FIELD_DATA = 'data';
-
     protected string $requestId = '';
-
     protected float $timeMicro = 0.0;
-
     protected string $component = '';
-
     protected int $level = 0;
-
     protected string $message = '';
-
     protected ?array $data = [];
 
     public function __construct(

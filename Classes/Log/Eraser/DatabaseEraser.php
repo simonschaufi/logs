@@ -12,7 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class DatabaseEraser implements EraserInterface
 {
     protected string $table = 'sys_log';
-
     protected Connection $connection;
 
     public function __construct(?array $configuration = null)

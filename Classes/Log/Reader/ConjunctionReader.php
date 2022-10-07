@@ -45,10 +45,10 @@ class ConjunctionReader implements ReaderInterface
             $logs,
             static function ($left, $right) use ($orderField, $direction) {
                 return $direction
-                       * strcmp(
-                           (string)ObjectAccess::getProperty($right, $orderField),
-                           (string)ObjectAccess::getProperty($left, $orderField)
-                       );
+                    * strcmp(
+                        (string)ObjectAccess::getProperty($right, $orderField),
+                        (string)ObjectAccess::getProperty($left, $orderField)
+                    );
             }
         );
         return array_slice($logs, 0, $filter->getLimit());
