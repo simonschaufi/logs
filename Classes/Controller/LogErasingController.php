@@ -6,8 +6,8 @@ namespace CoStack\Logs\Controller;
 
 use CoStack\Logs\Domain\Model\Log;
 use CoStack\Logs\Log\Eraser\EraserCollection;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 
 class LogErasingController extends ActionController
 {
@@ -19,7 +19,7 @@ class LogErasingController extends ActionController
     }
 
     /**
-     * @throws StopActionException
+     * @noinspection PhpUnused Plugin action called by Extbase
      */
     public function deleteAction(
         string $requestId,
@@ -27,19 +27,21 @@ class LogErasingController extends ActionController
         string $component,
         int $level,
         string $message
-    ): void {
+    ): RedirectResponse {
         $log = new Log($requestId, $timeMicro, $component, $level, $message, []);
         $this->eraserCollection->delete($log);
-        $this->redirect('filter', 'LogReading');
+        $uri = $this->uriBuilder->uriFor('filter', [], 'LogReading');
+        return new RedirectResponse($uri);
     }
 
     /**
-     * @throws StopActionException
+     * @noinspection PhpUnused Plugin action called by Extbase
      */
-    public function deleteAlikeAction(string $component, int $level, string $message): void
+    public function deleteAlikeAction(string $component, int $level, string $message): RedirectResponse
     {
         $log = new Log('', 0.0, $component, $level, $message, []);
         $this->eraserCollection->deleteAlike($log);
-        $this->redirect('filter', 'LogReading');
+        $uri = $this->uriBuilder->uriFor('filter', [], 'LogReading');
+        return new RedirectResponse($uri);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CoStack\Logs\Controller;
 
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Core\Log\Writer\FileWriter;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -82,7 +83,7 @@ class DeprecationController extends ActionController
      * 3. Replace the old file with the new file
      * 4. Profit
      */
-    public function deleteAction(string $hash): void
+    public function deleteAction(string $hash): RedirectResponse
     {
         $file = $this->getLogFilePath();
 
@@ -135,7 +136,8 @@ class DeprecationController extends ActionController
 
         $this->addFlashMessage(LocalizationUtility::translate('deleted_count', 'logs', [$count]));
 
-        $this->redirect('filter');
+        $uri = $this->uriBuilder->uriFor('filter');
+        return new RedirectResponse($uri);
     }
 
     protected function getLogFilePath(): string
