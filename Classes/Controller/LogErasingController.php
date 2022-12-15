@@ -13,6 +13,9 @@ class LogErasingController extends ActionController
 {
     protected EraserCollection $eraserCollection;
 
+    /**
+     * @noinspection PhpUnused
+     */
     public function injectEraserCollection(EraserCollection $eraserCollection): void
     {
         $this->eraserCollection = $eraserCollection;

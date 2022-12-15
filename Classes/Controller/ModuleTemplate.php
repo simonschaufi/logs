@@ -42,16 +42,25 @@ trait ModuleTemplate
         'TYPO3/CMS/Logs/Module',
     ];
 
+    /**
+     * @noinspection PhpUnused
+     */
     public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
     {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
     }
 
+    /**
+     * @noinspection PhpUnused
+     */
     public function injectLanguageService(LanguageServiceFactory $languageServiceFactory): void
     {
         $this->languageService = $languageServiceFactory->createFromUserPreferences($this->getBackendUser());
     }
 
+    /**
+     * @noinspection PhpUnused
+     */
     public function injectPageRenderer(PageRenderer $pageRenderer): void
     {
         $this->pageRenderer = $pageRenderer;

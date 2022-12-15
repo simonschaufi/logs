@@ -17,6 +17,9 @@ class LogReadingController extends ActionController
 
     protected ReaderCollection $readerCollection;
 
+    /**
+     * @noinspection PhpUnused DI
+     */
     public function injectReaderCollection(ReaderCollection $readerCollection): void
     {
         $this->readerCollection = $readerCollection;
@@ -41,6 +44,7 @@ class LogReadingController extends ActionController
 
     /**
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("filter")
+     * @noinspection PhpUnused Plugin action called by Extbase
      */
     public function filterAction(?Filter $filter = null): ResponseInterface
     {

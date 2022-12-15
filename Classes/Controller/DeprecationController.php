@@ -29,6 +29,9 @@ class DeprecationController extends ActionController
 
     private const STATIC_PREFIX = ' component="TYPO3.CMS.deprecations":';
 
+    /**
+     * @noinspection PhpUnused Plugin action called by Extbase
+     */
     public function filterAction(): ResponseInterface
     {
         $file = $this->getLogFilePath();
@@ -82,6 +85,8 @@ class DeprecationController extends ActionController
      * 2. Copy all lines from the old to the new file which do not match the hash
      * 3. Replace the old file with the new file
      * 4. Profit
+     *
+     * @noinspection PhpUnused Plugin action called by Extbase
      */
     public function deleteAction(string $hash): RedirectResponse
     {

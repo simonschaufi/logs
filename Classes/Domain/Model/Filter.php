@@ -27,6 +27,9 @@ class Filter
         return $this->requestId;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setRequestId(string $requestId): void
     {
         $this->requestId = $requestId;
@@ -37,6 +40,9 @@ class Filter
         return $this->level;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setLevel(string $level): void
     {
         $this->level = $level;
@@ -47,6 +53,9 @@ class Filter
         return $this->fromTime;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setFromTime(int $fromTime = null): void
     {
         $this->fromTime = $fromTime;
@@ -57,6 +66,9 @@ class Filter
         return $this->toTime;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setToTime(int $toTime = null): void
     {
         $this->toTime = $toTime;
@@ -67,6 +79,9 @@ class Filter
         return $this->showData;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setShowData(bool $showData): void
     {
         $this->showData = $showData;
@@ -77,6 +92,9 @@ class Filter
         return $this->component;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setComponent(string $component): void
     {
         $this->component = $component;
@@ -87,6 +105,9 @@ class Filter
         return $this->fullMessage;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setFullMessage(bool $fullMessage): void
     {
         $this->fullMessage = $fullMessage;
@@ -97,6 +118,9 @@ class Filter
         return $this->limit;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setLimit(int $limit): void
     {
         $this->limit = $limit;
@@ -107,6 +131,9 @@ class Filter
         return $this->orderField;
     }
 
+    /**
+     * @noinspection PhpUnused Required by Extbase to set property
+     */
     public function setOrderField(string $orderField): void
     {
         if (array_key_exists($orderField, $this->getOrderFields())) {
@@ -119,11 +146,17 @@ class Filter
         return $this->orderDirection;
     }
 
+    /**
+     * @noinspection PhpUnused
+     */
     public function setOrderDirection(string $orderDirection): void
     {
         $this->orderDirection = $orderDirection;
     }
 
+    /**
+     * @noinspection PhpUnused Partials/Log/Filter.html
+     */
     public function getLogLevels(): array
     {
         return [
@@ -148,6 +181,9 @@ class Filter
         ];
     }
 
+    /**
+     * @noinspection PhpUnused Used in Partials/Log/Filter.html
+     */
     public function getOrderDirections(): array
     {
         return [
