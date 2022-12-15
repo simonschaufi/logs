@@ -1,21 +1,29 @@
 <?php
-/** @noinspection PhpFullyQualifiedNameUsageInspection */
+
+/**
+ * @noinspection PhpMissingStrictTypesDeclarationInspection
+ */
+
+use CoStack\Logs\Controller\DeprecationController;
+use CoStack\Logs\Controller\LogErasingController;
+use CoStack\Logs\Controller\LogReadingController;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 (static function () {
-    $configuration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-        \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
-    )->get('logs');
+    $configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('logs');
 
     if ($configuration['moduleConfig'] !== 'disable') {
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+        ExtensionUtility::registerModule(
             'logs',
             $configuration['moduleConfig'],
             'logs',
             '',
             [
-                \CoStack\Logs\Controller\LogReadingController::class => 'filter',
-                \CoStack\Logs\Controller\LogErasingController::class => 'delete,deleteAlike',
-                \CoStack\Logs\Controller\DeprecationController::class => 'filter,delete',
+                LogReadingController::class => 'filter',
+                LogErasingController::class => 'delete,deleteAlike',
+                DeprecationController::class => 'filter,delete',
             ],
             [
                 'access' => 'user,group',

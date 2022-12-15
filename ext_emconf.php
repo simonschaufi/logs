@@ -1,4 +1,13 @@
 <?php
+
+declare(strict_types=1);
+
+/**
+ * @var array $EM_CONF
+ * @var string $_EXTKEY
+ *
+ * @noinspection PhpVariableNamingConventionInspection
+ */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'co-stack.com Logs',
     'description' => 'Log Reader with a backend module and API to read, filter and delete logs from the TYPO3 Logging API',
