@@ -54,7 +54,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "Resources/Private/Development/Packages/*"
+            "url": ".project/packages/*"
         }
     ]
 }

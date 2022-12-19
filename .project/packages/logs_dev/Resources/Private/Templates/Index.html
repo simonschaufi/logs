@@ -1,0 +1,11 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+	<f:flashMessages/>
+	<f:link.action class="btn btn-default" action="createLogs" arguments="{count: 100}">
+		Create 100 random log entries
+	</f:link.action>
+	<f:if condition="{deprecationLoggingEnabled}">
+		<f:link.action class="btn btn-default" action="createDeprecations" arguments="{count: 100}">
+			Create 100 random deprecations
+		</f:link.action>
+	</f:if>
+</html>

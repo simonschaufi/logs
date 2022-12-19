@@ -8,7 +8,7 @@
         'logs',
         'after:LogsLogs',
         [
-            \CoStack\LogsDev\Controller\ModuleController::class => 'index, create',
+            \CoStack\LogsDev\Controller\ModuleController::class => 'index, createLogs, createDeprecations',
         ],
         [
             'access' => 'user,group',
