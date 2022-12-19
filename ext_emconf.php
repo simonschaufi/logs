@@ -1,12 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * @var array $EM_CONF
  * @var string $_EXTKEY
  *
  * @noinspection PhpVariableNamingConventionInspection
+ * @noinspection PhpMissingStrictTypesDeclarationInspection
  */
 $EM_CONF[$_EXTKEY] = [
     'title' => 'co-stack.com Logs',
