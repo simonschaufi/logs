@@ -45,10 +45,8 @@ class ReaderCollection
 
         usort(
             $logs,
-            static fn(Log $left, Log $right) => $direction * strcmp(
-                    (string)$right->{$orderField},
-                    (string)$left->{$orderField}
-                )
+            static fn(Log $left, Log $right) =>
+                $direction * strcmp((string)$right->{$orderField}, (string)$left->{$orderField})
         );
         return array_slice($logs, 0, $filter->getLimit());
     }
