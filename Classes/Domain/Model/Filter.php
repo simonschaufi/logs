@@ -147,7 +147,7 @@ class Filter
     }
 
     /**
-     * @noinspection PhpUnused
+     * @noinspection PhpUnused Required by Extbase to set property
      */
     public function setOrderDirection(string $orderDirection): void
     {

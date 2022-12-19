@@ -27,6 +27,8 @@ class LogReadingController extends ActionController
 
     /**
      * @throws NoSuchArgumentException
+     *
+     * @noinspection PhpUnused Plugin initialize action called by Extbase
      */
     protected function initializeFilterAction(): void
     {
@@ -44,6 +46,7 @@ class LogReadingController extends ActionController
 
     /**
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("filter")
+     *
      * @noinspection PhpUnused Plugin action called by Extbase
      */
     public function filterAction(?Filter $filter = null): ResponseInterface
