@@ -69,7 +69,7 @@ class DatabaseReader implements Reader
 
         $requestId = $filter->getRequestId();
         if (!empty($requestId)) {
-            /* @see \TYPO3\CMS\Core\Core\Bootstrap::init for requestId string length */
+            /* @see \TYPO3\CMS\Core\Core\RequestId::__construct for requestId string length */
             if (13 === strlen($requestId)) {
                 $constraint = $query->expr()->eq(Log::FIELD_REQUEST_ID, $query->createNamedParameter($requestId));
             } else {
