@@ -35,7 +35,11 @@ bash:
 
 ## Setup the project. Only required once after cloning the project
 .install:
-	[[ -d ".Build" ]] || ddev config --auto
+	[[ -d ".Build/Web/typo3conf" ]] || mkdir -p ".Build/Web/typo3conf"
+	[[ -f ".Build/Web/typo3conf/AdditionalConfiguration.php" ]] || ddev config --auto
+	ddev start
+	[[ -f "composer.lock" ]] || ddev exec composer install
+	[[ -d ".projects/phars" ]] || ddev exec phive install
 
 ## Run all Quality Assurance targets
 qa-all: qa-lint-all qa-code-sniffer qa-mess-detector
@@ -46,20 +50,30 @@ qa-lint-all: qa-lint-composer qa-lint-typoscript qa-lint-php-all
 
 ## Validate the composer.json schema
 qa-lint-composer:
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/php:7.2-fpm composer validate --strict
+	ddev composer validate --strict
 
 ## PHP lint for all language levels
-qa-lint-php-all: qa-lint-php-7.4 qa-lint-php-8.0
+qa-lint-php-all: qa-lint-php-7.4 qa-lint-php-8.0 qa-lint-php-8.1 qa-lint-php-8.2
 
 ## PHP lint for language level 7.4
 qa-lint-php-7.4:
 	echo "$(EMOJI_digit_seven)$(EMOJI_digit_four) $(EMOJI_elephant) PHP lint 7.4"
 	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:7.4-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
 
-## PHP lint for language level 7.4
+## PHP lint for language level 8.0
 qa-lint-php-8.0:
-	echo "$(EMOJI_digit_seven)$(EMOJI_digit_four) $(EMOJI_elephant) PHP lint 8.0"
+	echo "$(EMOJI_digit_eight)$(EMOJI_digit_zero) $(EMOJI_elephant) PHP lint 8.0"
 	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:8.0-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
+
+## PHP lint for language level 8.1
+qa-lint-php-8.1:
+	echo "$(EMOJI_digit_eight)$(EMOJI_digit_one) $(EMOJI_elephant) PHP lint 8.1"
+	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:8.1-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
+
+## PHP lint for language level 8.2
+qa-lint-php-8.2:
+	echo "$(EMOJI_digit_eight)$(EMOJI_digit_two) $(EMOJI_elephant) PHP lint 8.2"
+	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:8.2-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
 
 ## TYPO3 typoscript lint
 qa-lint-typoscript:
@@ -68,17 +82,17 @@ qa-lint-typoscript:
 ## PHP code sniffer
 qa-code-sniffer:
 	echo "$(EMOJI_pig_nose) PHP Code Sniffer"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/phpcs:7.2 phpcs
+	ddev exec .project/phars/phpcs
 
 ## PHP
 qa-fix-code-sniffer:
 	echo "$(EMOJI_broom) PHP Code Beautifier and Fixer"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/phpcs:7.2 phpcbf
+	ddev exec .project/phars/phpcbf
 
 ## PHP mess detector
 qa-mess-detector:
 	echo "$(EMOJI_customs) PHP Mess Detector"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app in2code/phpmd:7.2 phpmd Classes ansi .phpmd.xml
+	ddev exec .project/phars/phpmd Classes ansi .phpmd.xml
 
 # SETTINGS
 MAKEFLAGS += --silent
@@ -98,10 +112,12 @@ EMOJI_interrobang := "⁉️ "
 EMOJI_thumbsup := "👍️"
 EMOJI_elephant := "🐘️"
 EMOJI_broom := "🧹"
+EMOJI_digit_zero := "0️"
 EMOJI_digit_one := "1️"
 EMOJI_digit_two := "2️"
 EMOJI_digit_three := "3️"
 EMOJI_digit_four := "4️"
 EMOJI_digit_seven := "7️"
+EMOJI_digit_eight := "8️"
 EMOJI_pig_nose := "🐽"
 EMOJI_customs := "🛃"
