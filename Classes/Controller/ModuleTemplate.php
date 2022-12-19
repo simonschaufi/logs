@@ -31,7 +31,7 @@ trait ModuleTemplate
     private array $modules = [
         'LLL:EXT:logs/Resources/Private/Language/locallang.xlf:logs' => [
             'action' => 'filter',
-            'controller' => 'Log',
+            'controller' => 'LogReading',
         ],
         'LLL:EXT:logs/Resources/Private/Language/locallang.xlf:deprecations' => [
             'action' => 'filter',
