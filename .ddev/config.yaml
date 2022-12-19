@@ -14,14 +14,15 @@ database:
 nfs_mount_enabled: false
 mutagen_enabled: false
 hooks:
+  pre-start:
+    - exec-host: mkdir -p .Build/Web/typo3conf
   post-start:
   - composer: install
-  pre-start:
-  - exec-host: mkdir -p .Build/Web/typo3conf
 use_dns_when_possible: true
 timezone: Europe/Berlin
 composer_version: "2"
-web_environment: []
+web_environment:
+  - TYPO3_CONTEXT=Development
 nodejs_version: "16"
 
 # Key features of ddev's config.yaml:
