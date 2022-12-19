@@ -109,25 +109,33 @@ class CollectionFactory
             if ('writerConfiguration' !== $key) {
                 $this->getWriters($value, $writers);
             } elseif (is_array($value)) {
-                foreach ($value as $writersForLevel) {
-                    if (is_array($writersForLevel)) {
-                        foreach ($writersForLevel as $writerClass => $writerOptions) {
-                            if (
-                                is_array($writerOptions)
-                                && false === ($writerOptions['disabled'] ?? false)
-                            ) {
-                                unset($writerOptions['disabled']);
-                                $writers[] = [
-                                    'class' => $writerClass,
-                                    'options' => is_array($writerOptions) ? $writerOptions : [],
-                                ];
-                            }
-                        }
-                    }
-                }
+                $this->getWritersForLevel($value, $writers);
             }
         }
 
         return $writers;
+    }
+
+    /**
+     * @param array<array{class: class-string<WriterInterface>, options: array}> $value
+     */
+    public function getWritersForLevel(array $value, array &$writers): void
+    {
+        foreach ($value as $writersForLevel) {
+            if (is_array($writersForLevel)) {
+                foreach ($writersForLevel as $writerClass => $writerOptions) {
+                    if (
+                        is_array($writerOptions)
+                        && false === ($writerOptions['disabled'] ?? false)
+                    ) {
+                        unset($writerOptions['disabled']);
+                        $writers[] = [
+                            'class' => $writerClass,
+                            'options' => is_array($writerOptions) ? $writerOptions : [],
+                        ];
+                    }
+                }
+            }
+        }
     }
 }
