@@ -21,7 +21,14 @@ use function substr;
 
 class DatabaseReader implements Reader
 {
-    protected array $selectFields = ['request_id', 'time_micro', 'component', 'level', 'message', 'data'];
+    protected array $selectFields = [
+        Log::FIELD_REQUEST_ID,
+        Log::FIELD_TIME_MICRO,
+        Log::FIELD_COMPONENT,
+        Log::FIELD_LEVEL,
+        Log::FIELD_MESSAGE,
+        Log::FIELD_DATA,
+    ];
     protected string $table = '';
     protected ?Connection $connection = null;
 
