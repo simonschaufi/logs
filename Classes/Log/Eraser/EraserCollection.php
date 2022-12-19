@@ -21,17 +21,21 @@ class EraserCollection
         $this->erasers = $erasers;
     }
 
-    public function delete(Log $log): void
+    public function delete(Log $log): int
     {
+        $count = 0;
         foreach ($this->erasers as $eraser) {
-            $eraser->delete($log);
+            $count += $eraser->delete($log);
         }
+        return $count;
     }
 
-    public function deleteAlike(Log $log): void
+    public function deleteAlike(Log $log): int
     {
+        $count = 0;
         foreach ($this->erasers as $eraser) {
-            $eraser->deleteAlike($log);
+            $count += $eraser->deleteAlike($log);
         }
+        return $count;
     }
 }

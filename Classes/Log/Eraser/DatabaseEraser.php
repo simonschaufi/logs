@@ -26,9 +26,9 @@ class DatabaseEraser implements Eraser
         return ['logTable' => 'sys_log'];
     }
 
-    public function delete(Log $log): void
+    public function delete(Log $log): int
     {
-        $this->connection->delete($this->table, [
+        return $this->connection->delete($this->table, [
             'request_id' => $log->requestId,
             'time_micro' => $log->timeMicro,
             'component' => $log->component,
@@ -37,9 +37,9 @@ class DatabaseEraser implements Eraser
         ]);
     }
 
-    public function deleteAlike(Log $log): void
+    public function deleteAlike(Log $log): int
     {
-        $this->connection->delete($this->table, [
+        return $this->connection->delete($this->table, [
             'component' => $log->component,
             'level' => $log->level,
             'message' => $log->message,

@@ -16,11 +16,13 @@ interface Eraser
 
     /**
      * Deletes a single log entry found by the given log model.
+     * @return int The number of deleted rows
      */
-    public function delete(Log $log): void;
+    public function delete(Log $log): int;
 
     /**
      * Deletes all log entries with the same component, message and level (ignoring the request ID, micro time and data)
+     * @return int The number of deleted rows
      */
-    public function deleteAlike(Log $log): void;
+    public function deleteAlike(Log $log): int;
 }

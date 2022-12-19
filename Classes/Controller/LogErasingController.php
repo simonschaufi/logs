@@ -9,6 +9,8 @@ use CoStack\Logs\Log\Eraser\EraserCollection;
 use TYPO3\CMS\Core\Http\RedirectResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
+use function sprintf;
+
 class LogErasingController extends ActionController
 {
     protected EraserCollection $eraserCollection;
@@ -32,7 +34,8 @@ class LogErasingController extends ActionController
         string $message
     ): RedirectResponse {
         $log = new Log($requestId, $timeMicro, $component, $level, $message, []);
-        $this->eraserCollection->delete($log);
+        $deletedCount = $this->eraserCollection->delete($log);
+        $this->addFlashMessage(sprintf('Deleted %d log(s)', $deletedCount));
         $uri = $this->uriBuilder->uriFor('filter', [], 'LogReading');
         return new RedirectResponse($uri);
     }
@@ -43,7 +46,8 @@ class LogErasingController extends ActionController
     public function deleteAlikeAction(string $component, int $level, string $message): RedirectResponse
     {
         $log = new Log('', 0.0, $component, $level, $message, []);
-        $this->eraserCollection->deleteAlike($log);
+        $deletedCount = $this->eraserCollection->deleteAlike($log);
+        $this->addFlashMessage(sprintf('Deleted %d log(s)', $deletedCount));
         $uri = $this->uriBuilder->uriFor('filter', [], 'LogReading');
         return new RedirectResponse($uri);
     }
