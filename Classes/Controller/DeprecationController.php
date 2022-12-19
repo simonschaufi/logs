@@ -100,7 +100,8 @@ class DeprecationController extends ActionController
                 LocalizationUtility::translate('error', 'logs'),
                 AbstractMessage::ERROR
             );
-            $this->redirect('filter');
+            $uri = $this->uriBuilder->uriFor('filter');
+            return new RedirectResponse($uri);
         }
         $oldStream = fopen($file, 'rb');
 
