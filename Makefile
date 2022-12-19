@@ -21,6 +21,22 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
+## Start the project in DDEV
+start: .install
+	ddev start
+
+## Shut down the project
+stop:
+	ddev poweroff
+
+## Create a bash process in the main app container
+bash:
+	ddev exec bash
+
+## Setup the project. Only required once after cloning the project
+.install:
+	[[ -d ".Build" ]] || ddev config --auto
+
 ## Run all Quality Assurance targets
 qa-all: qa-lint-all qa-code-sniffer qa-mess-detector
 	echo "$(EMOJI_thumbsup) All clear"
