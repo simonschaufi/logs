@@ -32,28 +32,24 @@ test:phpmd:
     - job: build:phive
       artifacts: true
 
-build:composer:
-  stage: build
-  image: in2code/php:7.4-fpm
-  interruptible: true
-  script:
-    - Build/Scripts/runTests.sh -s composerUpdate
-  artifacts:
-    paths:
-      - .Build
-
 test:phpunit:
   stage: test
-  image: in2code/php:7.4-fpm
+  image: docker:20.10.20
+  services:
+    - docker:20.10.20-dind
   interruptible: true
   parallel:
     matrix:
       - PHP_VERSION: [ "7.4", "8.0", "8.1" ]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}-${PHP_VERSION}
+    paths:
+      - .Build/.cache/
+  before_script:
+    - Build/Scripts/runTests.sh -p $PHP_VERSION -s composerUpdate
   script:
-    - Build/Scripts/runTests.sh -s unit -p $PHP_VERSION
-  needs:
-    - job: build:composer
-      artifacts: true
+    - Build/Scripts/runTests.sh -p $PHP_VERSION -s unit
+  needs: []
 
 test:lint:composer:
   stage: test
