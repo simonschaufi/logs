@@ -46,6 +46,7 @@ test:phpunit:
     paths:
       - .Build/.cache/
   before_script:
+    - apk add bash
     - Build/Scripts/runTests.sh -p $PHP_VERSION -s composerUpdate
   script:
     - Build/Scripts/runTests.sh -p $PHP_VERSION -s unit
