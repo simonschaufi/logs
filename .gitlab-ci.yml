@@ -32,6 +32,29 @@ test:phpmd:
     - job: build:phive
       artifacts: true
 
+build:composer:
+  stage: build
+  image: in2code/php:7.4-fpm
+  interruptible: true
+  script:
+    - Build/Scripts/runTests.sh -s composerUpdate
+  artifacts:
+    paths:
+      - .Build
+
+test:phpunit:
+  stage: test
+  image: in2code/php:7.4-fpm
+  interruptible: true
+  parallel:
+    matrix:
+      - PHP_VERSION: [ "7.4", "8.0", "8.1" ]
+  script:
+    - Build/Scripts/runTests.sh -s unit -p $PHP_VERSION
+  needs:
+    - job: build:composer
+      artifacts: true
+
 test:lint:composer:
   stage: test
   image: in2code/php:7.2-fpm

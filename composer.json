@@ -14,6 +14,11 @@
             "CoStack\\Logs\\": "Classes/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "CoStack\\LogsTests\\": "Tests/"
+        }
+    },
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
@@ -43,7 +48,8 @@
     "require-dev": {
         "co-stack/logs-dev": "@dev",
         "typo3/cms-lowlevel": "^11.5",
-        "typo3/minimal": "^v11.5"
+        "typo3/minimal": "^v11.5",
+        "typo3/testing-framework": "^6.16"
     },
     "scripts": {
         "post-autoload-dump": [

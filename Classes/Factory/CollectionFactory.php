@@ -106,10 +106,15 @@ class CollectionFactory
     protected function getWriters(array $configuration, array &$writers = []): array
     {
         foreach ($configuration as $key => $value) {
-            if ('writerConfiguration' !== $key) {
-                $this->getWriters($value, $writers);
-            } elseif (is_array($value)) {
-                $this->getWritersForLevel($value, $writers);
+            if (is_array($value)) {
+                if ('processorConfiguration' === $key) {
+                    continue;
+                }
+                if ('writerConfiguration' !== $key) {
+                    $this->getWriters($value, $writers);
+                } else {
+                    $this->getWritersForLevel($value, $writers);
+                }
             }
         }
 
