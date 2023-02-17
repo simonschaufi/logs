@@ -112,7 +112,7 @@ class DatabaseReader implements Reader
         if (0 === (int)$statement->errorCode()) {
             while (($row = $statement->fetch())) {
                 $row[5] = $row[5] === '' ? null : json_decode(substr($row[5], 2), true);
-                $logs[] = new Log($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
+                $logs[] = new Log($row[0], $row[1], $row[2], (int)$row[3], $row[4], $row[5]);
             }
             return $logs;
         }
