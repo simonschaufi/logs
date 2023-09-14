@@ -60,7 +60,7 @@ class DeprecationController extends ActionController
             }
             $hash = sha1($line);
             $deprecations[$hash] = $line;
-            $count[$hash]++;
+            $count[$hash] = ($count[$hash] ?? 0) + 1;
             $current = $peek;
         }
         fclose($stream);
