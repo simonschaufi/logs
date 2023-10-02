@@ -33,6 +33,10 @@ stop:
 bash:
 	ddev exec bash
 
+## Run the automated tests
+test:
+	Build/Scripts/runTests.sh
+
 ## Setup the project. Only required once after cloning the project
 .install:
 	[[ -d ".Build/Web/typo3conf" ]] || mkdir -p ".Build/Web/typo3conf"
@@ -53,17 +57,7 @@ qa-lint-composer:
 	ddev composer validate --strict
 
 ## PHP lint for all language levels
-qa-lint-php-all: qa-lint-php-7.4 qa-lint-php-8.0 qa-lint-php-8.1 qa-lint-php-8.2
-
-## PHP lint for language level 7.4
-qa-lint-php-7.4:
-	echo "$(EMOJI_digit_seven)$(EMOJI_digit_four) $(EMOJI_elephant) PHP lint 7.4"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:7.4-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
-
-## PHP lint for language level 8.0
-qa-lint-php-8.0:
-	echo "$(EMOJI_digit_eight)$(EMOJI_digit_zero) $(EMOJI_elephant) PHP lint 8.0"
-	docker run --rm -it -u1000:1000 -v "$$PWD":/app php:8.0-cli bash -c 'find /app -path /app/.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$$(nproc) php -l -n > /dev/null' && echo "No syntax errors found"
+qa-lint-php-all: qa-lint-php-8.1 qa-lint-php-8.2
 
 ## PHP lint for language level 8.1
 qa-lint-php-8.1:

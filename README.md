@@ -26,7 +26,8 @@ destinations (tables, files, etc.)
 
 The current major version 3.1 requires PHP 7.1 or higher and support TYPO3 version 9 and 10.
 
-For versions supporting older PHP and / or TYPO3 versions please use the previous tags. Keep in mind, that these are not actively supported, and you should strongly consider upgrading your TYPO3 installation.
+For versions supporting older PHP and / or TYPO3 versions please use the previous tags. Keep in mind, that these are not
+actively supported, and you should strongly consider upgrading your TYPO3 installation.
 
 ## TODO
 
@@ -34,9 +35,15 @@ For versions supporting older PHP and / or TYPO3 versions please use the previou
 * Identify and fix that one bug that sometimes won't delete a log entry
 * Add a log writer filter (to deselect log readers/erasers) #4
 
+## Known issues
+
+* Deleting a log entry is not executed without an error message if the used webserver is nginx and the log message
+  contains a semicolon
+
 ## Found a bug? Feedback?
 
-Please report any bug or negative side effects, as well as your feedback here: [Issues](https://gitlab.com/co-stack.com/co-stack.com/typo3-extensions/logs/-/issues)
+Please report any bug or negative side effects, as well as your feedback
+here: [Issues](https://gitlab.com/co-stack.com/co-stack.com/typo3-extensions/logs/-/issues)
 
 ## Other stuff
 

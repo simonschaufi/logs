@@ -20,11 +20,11 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "ext-pdo": "*",
-        "psr/log": "^1.0",
-        "typo3/cms-core": "^11.5"
+        "psr/log": "^2.0 || ^3.0",
+        "typo3/cms-core": "^12.4"
     },
     "config": {
         "vendor-dir": ".Build/vendor",
@@ -47,9 +47,9 @@
     },
     "require-dev": {
         "co-stack/logs-dev": "@dev",
-        "typo3/cms-lowlevel": "^11.5",
-        "typo3/minimal": "^v11.5",
-        "typo3/testing-framework": "^6.16"
+        "typo3/cms-lowlevel": "^12.4",
+        "typo3/minimal": "^12.4",
+        "typo3/testing-framework": "^8.0"
     },
     "scripts": {
         "post-autoload-dump": [

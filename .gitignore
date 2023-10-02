@@ -1,4 +1,7 @@
 /.idea
 /.Build
 /.project/phars
+/Build/testing-docker/.env
+/config
+/var
 /composer.lock

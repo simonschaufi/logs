@@ -6,7 +6,8 @@ namespace CoStack\Logs\Log\Reader;
 
 use CoStack\Logs\Domain\Model\Filter;
 use CoStack\Logs\Domain\Model\Log;
-use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Result;
 use PDO;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -43,6 +44,9 @@ class DatabaseReader implements Reader
         return ['logTable' => 'sys_log'];
     }
 
+    /**
+     * @throws Exception
+     */
     public function findByFilter(Filter $filter): array
     {
         $query = $this->connection->createQueryBuilder();
@@ -96,25 +100,22 @@ class DatabaseReader implements Reader
         if ($limit > 0) {
             $query->setMaxResults($limit);
         }
-        $statement = $query->execute();
+        $result = $query->executeQuery();
 
-        return $this->fetchLogsByStatement($statement);
+        return $this->fetchLogsFromResult($result);
     }
 
     /**
      * @return Log[]
+     * @throws Exception
      */
-    protected function fetchLogsByStatement(Statement $statement): array
+    protected function fetchLogsFromResult(Result $result): array
     {
         $logs = [];
 
-        $statement->setFetchMode(PDO::FETCH_NUM);
-        if (0 === (int)$statement->errorCode()) {
-            while (($row = $statement->fetch())) {
-                $row[5] = $row[5] === '' ? null : json_decode(substr($row[5], 2), true);
-                $logs[] = new Log($row[0], $row[1], $row[2], (int)$row[3], $row[4], $row[5]);
-            }
-            return $logs;
+        while (($row = $result->fetchNumeric())) {
+            $row[5] = $row[5] === '' ? null : json_decode(substr($row[5], 2), true);
+            $logs[] = new Log($row[0], $row[1], $row[2], (int)$row[3], $row[4], $row[5]);
         }
         return $logs;
     }
