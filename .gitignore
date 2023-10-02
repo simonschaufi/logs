@@ -1,6 +1,7 @@
 /.idea
 /.Build
 /.project/phars
+/Build/.phpunit.cache
 /Build/testing-docker/.env
 /config
 /var

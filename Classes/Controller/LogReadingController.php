@@ -38,7 +38,7 @@ class LogReadingController extends ActionController
         } else {
             $filter = $this->getBackendUser()->getSessionData('tx_logs_filter');
             if (null !== $filter) {
-                $this->request->setArgument('filter', $filter);
+                $this->request = $this->request->withArgument('filter', $filter);
                 $this->arguments->getArgument('filter')->getPropertyMappingConfiguration()->allowAllProperties();
             }
         }

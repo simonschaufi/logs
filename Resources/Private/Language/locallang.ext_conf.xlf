@@ -3,7 +3,7 @@
 	<file source-language="en" datatype="plaintext" original="messages" product-name="logs">
 		<body>
 			<trans-unit id="module_config">
-				<source>Select where the module should be shown</source>
+				<source>Select where the module should be shown: Changing this settings requires you to clear the system caches afterwards.</source>
 			</trans-unit>
 			<trans-unit id="module_disabled">
 				<source>Do not activate the module (API only)</source>

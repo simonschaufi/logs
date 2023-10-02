@@ -35,11 +35,8 @@ class ModuleController extends ActionController implements LoggerAwareInterface
         LogLevel::ALERT,
         LogLevel::EMERGENCY,
     ];
-    private ModuleTemplateFactory $moduleTemplateFactory;
-
-    public function __construct(ModuleTemplateFactory $moduleTemplateFactory)
+    public function __construct(private ModuleTemplateFactory $moduleTemplateFactory)
     {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
     }
 
     /**
@@ -109,19 +106,12 @@ class ModuleController extends ActionController implements LoggerAwareInterface
             // Random data key
             $key = $generator->text(36);
             // Random data type
-            switch (rand(0, 3)) {
-                case 0:
-                    $value = [];
-                    break;
-                case 1:
-                    $value = $generator->randomNumber();
-                    break;
-                case 2:
-                    $value = $generator->text();
-                    break;
-                default:
-                    $value = null;
-            }
+            $value = match (rand(0, 3)) {
+                0 => [],
+                1 => $generator->randomNumber(),
+                2 => $generator->text(),
+                default => null,
+            };
             $data[$key] = $value;
         }
 

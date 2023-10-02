@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 use CoStack\Logs\Controller\DeprecationController;
 use CoStack\Logs\Controller\LogErasingController;
@@ -14,14 +15,15 @@ if ($configuration['moduleConfig'] === 'disable') {
 }
 
 return [
-    'web_examples' => [
+    'tx-logs' => [
         'parent' => $configuration['moduleConfig'],
         'position' => [],
         'access' => 'user,group',
         'workspaces' => 'live',
-        'path' => '/module/page/example',
+        'path' => '/module/tx-logs',
         'labels' => 'LLL:EXT:logs/Resources/Private/Language/locallang.module.xlf',
         'extensionName' => 'logs',
+        'iconIdentifier' => 'tx-logs-module',
         'controllerActions' => [
             LogReadingController::class => [
                 'filter'

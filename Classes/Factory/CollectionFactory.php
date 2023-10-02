@@ -25,7 +25,6 @@ use const JSON_THROW_ON_ERROR;
 /**
  * @noinspection PhpUnused Used as factory for the injection of EraserCollection and ReaderCollection
  */
-
 class CollectionFactory
 {
     protected const WRITER_ERASER_MAPPING = [

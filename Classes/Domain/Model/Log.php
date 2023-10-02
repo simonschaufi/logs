@@ -20,27 +20,15 @@ class Log
     public const FIELD_LEVEL = 'level';
     public const FIELD_MESSAGE = 'message';
     public const FIELD_DATA = 'data';
-    public string $requestId;
-    public float $timeMicro;
-    public string $component;
-    public int $level;
-    public string $message;
-    public ?array $data;
 
     public function __construct(
-        string $requestId,
-        float $timeMicro,
-        string $component,
-        int $level,
-        string $message,
-        ?array $data
+        public string $requestId,
+        public float $timeMicro,
+        public string $component,
+        public int $level,
+        public string $message,
+        public ?array $data
     ) {
-        $this->requestId = $requestId;
-        $this->timeMicro = $timeMicro;
-        $this->component = $component;
-        $this->level = $level;
-        $this->message = $message;
-        $this->data = $data;
     }
 
     /**
@@ -49,9 +37,9 @@ class Log
     public function getTimeMicroFormatted(): string
     {
         $timeMicro = (string)$this->timeMicro;
-        if (false !== strpos($timeMicro, '.')) {
+        if (str_contains($timeMicro, '.')) {
             $dateTime = DateTime::createFromFormat('U.u', $timeMicro);
-        } elseif (false !== strpos($timeMicro, ' ')) {
+        } elseif (str_contains($timeMicro, ' ')) {
             $dateTime = DateTime::createFromFormat('u U', $timeMicro);
         } else {
             $dateTime = DateTime::createFromFormat('U', $timeMicro);

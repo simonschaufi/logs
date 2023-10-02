@@ -17,16 +17,10 @@ use function usort;
 class ReaderCollection
 {
     /**
-     * @var array<Reader>
-     */
-    protected array $readers = [];
-
-    /**
      * @param array<Reader> $readers
      */
-    public function __construct(array $readers)
+    public function __construct(protected array $readers)
     {
-        $this->readers = $readers;
     }
 
     /**
