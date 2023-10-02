@@ -40,7 +40,7 @@ test:phpunit:
   interruptible: true
   parallel:
     matrix:
-      - PHP_VERSION: [ "7.4", "8.0", "8.1" ]
+      - PHP_VERSION: [ "8.1", "8.2" ]
   cache:
     key: ${CI_COMMIT_REF_SLUG}-${PHP_VERSION}
     paths:
@@ -66,22 +66,6 @@ test:lint:typoscript:
   interruptible: true
   script:
     - typoscript-lint -c .typoscript-lint.yml
-  needs: []
-
-test:lint:php-7.4:
-  stage: test
-  image: php:7.4-cli
-  interruptible: true
-  script:
-    - find ./ -path ./.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$(nproc) php -l -n > /dev/null
-  needs: []
-
-test:lint:php-8.0:
-  stage: test
-  image: php:8.0-cli
-  interruptible: true
-  script:
-    - find ./ -path ./.Build -prune -false -o -type f -name '*.php' -print0 | xargs -0 -n1 -P$(nproc) php -l -n > /dev/null
   needs: []
 
 test:lint:php-8.1:

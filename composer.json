@@ -41,8 +41,7 @@
         "typo3/cms": {
             "extension-key": "logs",
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": ".Build/Web",
-            "app-dir": ".Build"
+            "web-dir": ".Build/Web"
         }
     },
     "require-dev": {
@@ -53,6 +52,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext",
             "ln -snf ../../../../ .Build/Web/typo3conf/ext/logs"
         ]
     },
